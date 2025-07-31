@@ -1,0 +1,20 @@
+docs_dir: docs/book
+site_dir: docs/html
+extra:
+  project: Queue
+  current_version: v1
+  versions:
+    - v1
+nav:
+  - Home: index.md
+  - v1:
+      - Overview: v1/overview.md
+      - Server Setup: v1/server-setup.md
+      - Installation: v1/installation.md
+      - Commands: v1/commands.md
+      - Valkey: v1/valkey.md
+site_name: queue
+site_description: "Dotkernel Queue"
+repo_url: "https://github.com/dotkernel/queue"
+plugins:
+  - search

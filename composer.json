@@ -1,0 +1,13 @@
+{
+  "name": "dotkernel/queue-documentation",
+  "description": "Dotkernel Queue documentation markdown files.",
+  "type": "metapackage",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dotkernel Team",
+      "email": "team@dotkernel.com"
+    }
+  ],
+  "require": {}
+}
