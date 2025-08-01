@@ -6,19 +6,27 @@
 
 ## Starting point
 
-A server with AlmaLinux 9 freshly installed, with root access and updated
+A server with **AlmaLinux 9** freshly installed, with root access and updated
 
 ### Update OS
 
+```shell
 dnf update
+```
 
 ### Create a new user with sudo permissions
 
-`useradd dotkernel`
+```shell
+useradd dotkernel
+```
 
-`passwd dotkernel`
+```shell
+passwd dotkernel
+```
 
-`usermod -aG wheel dotkernel`
+```shell
+usermod -aG wheel dotkernel
+```
 
 ### reboot
 
@@ -26,79 +34,129 @@ dnf update
 
 ### Install various utilities
 
-`sudo dnf install -y dnf-utils`
+```shell
+sudo dnf install -y dnf-utils
+```
 
-`sudo dnf install zip unzip socat wget`
+```shell
+sudo dnf install zip unzip socat wget
+```
 
 ### PHP
 
-`sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-9.rpm`
+```shell
+sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-9.rpm
+```
 
-`sudo dnf module enable php:remi-8.4`
+```shell
+sudo dnf module enable php:remi-8.4
+```
 
-`sudo dnf install -y php php-cli php-common php-intl`
+```shell
+sudo dnf install -y php php-cli php-common php-intl
+```
 
 ### Start PHP-FPM
 
-`sudo systemctl start php-fpm`
+```shell
+sudo systemctl start php-fpm
+```
 
-`sudo systemctl enable php-fpm`
+```shell
+sudo systemctl enable php-fpm
+```
 
 ### Install and verify swoole
 
-`sudo dnf install php-pecl-swoole6`
+```shell
+sudo dnf install php-pecl-swoole6
+```
 
-`php -i | grep swoole`
+```shell
+php -i | grep swoole
+```
 
 ### Valkey
 
-`sudo dnf install valkey`
+```shell
+sudo dnf install valkey
+```
 
-`sudo systemctl enable valkey`
+```shell
+sudo systemctl enable valkey
+```
 
-`sudo systemctl start valkey`
+```shell
+sudo systemctl start valkey
+```
 
-`sudo valkey-cli ping`
+```shell
+sudo valkey-cli ping
+```
 
 ### Valkey PHP module
 
-`sudo dnf install php-pecl-redis`
+```shell
+sudo dnf install php-pecl-redis
+```
 
-`php -i | grep redis`
+```shell
+php -i | grep redis
+```
 
 ### GIT
 
-`sudo dnf install git`
+```shell
+sudo dnf install git
+```
 
 ### Composer
 
-`wget https://getcomposer.org/installer -O composer-installer.php`
+```shell
+wget https://getcomposer.org/installer -O composer-installer.php
+```
 
-`sudo chmod 777 /usr/local/bin`
+```shell
+sudo chmod 777 /usr/local/bin
+```
 
-`php composer-installer.php --filename=composer --install-dir=/usr/local/bin`
+```shell
+php composer-installer.php --filename=composer --install-dir=/usr/local/bin
+```
 
 ### Firewall setup
 
 In order to add a minimum level of security, a firewall needs to be installed and allows  
-connections from outside only to certain ports, from certain IP's.
+connections from outside only to certain ports, from certain IP.
 
 > Firewall setup is not mandatory
 
-`sudo dnf install firewalld`
+```shell
+sudo dnf install firewalld
+```
 
-`sudo systemctl enable firewalld`
+```shell
+sudo systemctl enable firewalld
+```
 
 > Before starting the firewall, be sure you will not be locked outside
 
-`sudo firewall-offline-cmd --zone=public --add-port=22/tcp --permanent`
+```shell
+sudo firewall-offline-cmd --zone=public --add-port=22/tcp --permanent
+```
 
-`sudo systemctl start firewalld`
+```shell
+sudo systemctl start firewalld
+```
 
 > By default, Swoole runs on port 8556. You can change that in the configuration file.
 
-`sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="YOUR_IP_ADDRESS" port port="8556" protocol="tcp" accept'`
+```shell
+sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="YOUR_IP_ADDRESS" port port="8556" protocol="tcp" accept'
+```
 
-`sudo firewall-cmd --reload`
+```shell
+sudo firewall-cmd --reload
+```
 
-## NOW THE SERVER IS READY
+### NOW THE SERVER IS READY

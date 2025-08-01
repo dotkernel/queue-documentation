@@ -4,58 +4,84 @@ Valkey is an open source (BSD) high-performance key/value datastore that support
 
 The following commands can be run in the CLI to interact with Valkey. To enter CLI run:
 
-`valkey-cli`
+```shell
+valkey-cli
+```
 
 ## Utility Commands
 
 List all keys matching a pattern.
 
-`KEYS *`
+```shell
+KEYS *
+```
 
 Get server information and statistics.
 
-`INFO`
+```shell
+INFO
+```
 
 Check if the server is running.
 
-`PING`
+```shell
+PING
+```
 
 Delete all keys in all databases
 
-`FLUSHALL`
+```shell
+FLUSHALL
+```
 
 Check data type stored at a specific key (Possible types: string, list, set, zset, hash, stream)
 
-`TYPE keyName`
+```shell
+TYPE keyName
+```
 
 ## Key-Value Operations
 
 Set a string key to a value.
 
-`SET keyName "keyValue"`
+```shell
+SET keyName "keyValue"
+```
 
 Get the value of a key.
 
-`GET keyName`
+```shell
+GET keyName
+```
 
 Delete one or more keys.
 
-`DEL keyName1 keyName2`
+```shell
+DEL keyName1 keyName2
+```
 
 ## Stream Commands
 
 Read entries from a stream oldest to newest (revers '-' and '+' to reverse order).
 
-`XRANGE streamName - +`
+```shell
+XRANGE streamName - +
+```
 
 Delete stream
 
-`DEL streamName`
+```shell
+DEL streamName
+```
 
 Remove all stream entries and keep stream key
 
-`XTRIM streamName MAXLEN 0`
+```shell
+XTRIM streamName MAXLEN 0
+```
 
 Delete specific entry
 
-`XDEL streamName <entryId>`
+```shell
+XDEL streamName <entryId>
+```
