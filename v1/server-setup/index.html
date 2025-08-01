@@ -119,6 +119,16 @@
                             </a>
                         </li>
                         
+                        <li class="dropdown-item ">
+                            <a href="https://docs.dotkernel.org/headless-documentation/" class="nav-link d-flex gap-4 align-items-center">
+                                <img alt="Dotkernel Logo" class="d-inline-block align-text-top" height="50" src="https://docs.dotkernel.org/img/dk_logomark.svg" width="45" />
+                                <div>
+                                    <span class="fw-bold d-block">Headless Platform</span>
+                                    <span>Dotkernel Headless Platform</span>
+                                </div>
+                            </a>
+                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -246,10 +256,6 @@
                     <a href="#starting-point" class="toc__link nav-link">Starting point</a>
                 </li>
             
-                <li class="toc__entry">
-                    <a href="#now-the-server-is-ready" class="toc__link nav-link">NOW THE SERVER IS READY</a>
-                </li>
-            
             </ul>
         </div>
     
@@ -272,61 +278,61 @@
 <p>For other OS's need to be adapted accordingly</p>
 </blockquote>
 <h2 id="starting-point">Starting point</h2>
-<p>A server with AlmaLinux 9 freshly installed, with root access and updated</p>
+<p>A server with <strong>AlmaLinux 9</strong> freshly installed, with root access and updated</p>
 <h3 id="update-os">Update OS</h3>
-<p>dnf update</p>
+<pre class="highlight"><code class="language-shell">dnf update</code></pre>
 <h3 id="create-a-new-user-with-sudo-permissions">Create a new user with sudo permissions</h3>
-<p><code>useradd dotkernel</code></p>
-<p><code>passwd dotkernel</code></p>
-<p><code>usermod -aG wheel dotkernel</code></p>
+<pre class="highlight"><code class="language-shell">useradd dotkernel</code></pre>
+<pre class="highlight"><code class="language-shell">passwd dotkernel</code></pre>
+<pre class="highlight"><code class="language-shell">usermod -aG wheel dotkernel</code></pre>
 <h3 id="reboot">reboot</h3>
 <h3 id="ssh-to-the-server-as-new-user">SSH to the server as new user</h3>
 <h3 id="install-various-utilities">Install various utilities</h3>
-<p><code>sudo dnf install -y dnf-utils</code></p>
-<p><code>sudo dnf install zip unzip socat wget</code></p>
+<pre class="highlight"><code class="language-shell">sudo dnf install -y dnf-utils</code></pre>
+<pre class="highlight"><code class="language-shell">sudo dnf install zip unzip socat wget</code></pre>
 <h3 id="php">PHP</h3>
-<p><code>sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-9.rpm</code></p>
-<p><code>sudo dnf module enable php:remi-8.4</code></p>
-<p><code>sudo dnf install -y php php-cli php-common php-intl</code></p>
+<pre class="highlight"><code class="language-shell">sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-9.rpm</code></pre>
+<pre class="highlight"><code class="language-shell">sudo dnf module enable php:remi-8.4</code></pre>
+<pre class="highlight"><code class="language-shell">sudo dnf install -y php php-cli php-common php-intl</code></pre>
 <h3 id="start-php-fpm">Start PHP-FPM</h3>
-<p><code>sudo systemctl start php-fpm</code></p>
-<p><code>sudo systemctl enable php-fpm</code></p>
+<pre class="highlight"><code class="language-shell">sudo systemctl start php-fpm</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl enable php-fpm</code></pre>
 <h3 id="install-and-verify-swoole">Install and verify swoole</h3>
-<p><code>sudo dnf install php-pecl-swoole6</code></p>
-<p><code>php -i | grep swoole</code></p>
+<pre class="highlight"><code class="language-shell">sudo dnf install php-pecl-swoole6</code></pre>
+<pre class="highlight"><code class="language-shell">php -i | grep swoole</code></pre>
 <h3 id="valkey">Valkey</h3>
-<p><code>sudo dnf install valkey</code></p>
-<p><code>sudo systemctl enable valkey</code></p>
-<p><code>sudo systemctl start valkey</code></p>
-<p><code>sudo valkey-cli ping</code></p>
+<pre class="highlight"><code class="language-shell">sudo dnf install valkey</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl enable valkey</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl start valkey</code></pre>
+<pre class="highlight"><code class="language-shell">sudo valkey-cli ping</code></pre>
 <h3 id="valkey-php-module">Valkey PHP module</h3>
-<p><code>sudo dnf install php-pecl-redis</code></p>
-<p><code>php -i | grep redis</code></p>
+<pre class="highlight"><code class="language-shell">sudo dnf install php-pecl-redis</code></pre>
+<pre class="highlight"><code class="language-shell">php -i | grep redis</code></pre>
 <h3 id="git">GIT</h3>
-<p><code>sudo dnf install git</code></p>
+<pre class="highlight"><code class="language-shell">sudo dnf install git</code></pre>
 <h3 id="composer">Composer</h3>
-<p><code>wget https://getcomposer.org/installer -O composer-installer.php</code></p>
-<p><code>sudo chmod 777 /usr/local/bin</code></p>
-<p><code>php composer-installer.php --filename=composer --install-dir=/usr/local/bin</code></p>
+<pre class="highlight"><code class="language-shell">wget https://getcomposer.org/installer -O composer-installer.php</code></pre>
+<pre class="highlight"><code class="language-shell">sudo chmod 777 /usr/local/bin</code></pre>
+<pre class="highlight"><code class="language-shell">php composer-installer.php --filename=composer --install-dir=/usr/local/bin</code></pre>
 <h3 id="firewall-setup">Firewall setup</h3>
 <p>In order to add a minimum level of security, a firewall needs to be installed and allows<br />
-connections from outside only to certain ports, from certain IP's.</p>
+connections from outside only to certain ports, from certain IP.</p>
 <blockquote>
 <p>Firewall setup is not mandatory</p>
 </blockquote>
-<p><code>sudo dnf install firewalld</code></p>
-<p><code>sudo systemctl enable firewalld</code></p>
+<pre class="highlight"><code class="language-shell">sudo dnf install firewalld</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl enable firewalld</code></pre>
 <blockquote>
 <p>Before starting the firewall, be sure you will not be locked outside</p>
 </blockquote>
-<p><code>sudo firewall-offline-cmd --zone=public --add-port=22/tcp --permanent</code></p>
-<p><code>sudo systemctl start firewalld</code></p>
+<pre class="highlight"><code class="language-shell">sudo firewall-offline-cmd --zone=public --add-port=22/tcp --permanent</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl start firewalld</code></pre>
 <blockquote>
 <p>By default, Swoole runs on port 8556. You can change that in the configuration file.</p>
 </blockquote>
-<p><code>sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="YOUR_IP_ADDRESS" port port="8556" protocol="tcp" accept'</code></p>
-<p><code>sudo firewall-cmd --reload</code></p>
-<h2 id="now-the-server-is-ready">NOW THE SERVER IS READY</h2>
+<pre class="highlight"><code class="language-shell">sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="YOUR_IP_ADDRESS" port port="8556" protocol="tcp" accept'</code></pre>
+<pre class="highlight"><code class="language-shell">sudo firewall-cmd --reload</code></pre>
+<h3 id="now-the-server-is-ready">NOW THE SERVER IS READY</h3>
 
 
 

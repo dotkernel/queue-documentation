@@ -119,6 +119,16 @@
                             </a>
                         </li>
                         
+                        <li class="dropdown-item ">
+                            <a href="https://docs.dotkernel.org/headless-documentation/" class="nav-link d-flex gap-4 align-items-center">
+                                <img alt="Dotkernel Logo" class="d-inline-block align-text-top" height="50" src="https://docs.dotkernel.org/img/dk_logomark.svg" width="45" />
+                                <div>
+                                    <span class="fw-bold d-block">Headless Platform</span>
+                                    <span>Dotkernel Headless Platform</span>
+                                </div>
+                            </a>
+                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -276,20 +286,20 @@
 <p>The commands can be run in two different ways:</p>
 <h2 id="cli">CLI</h2>
 <p>To run the commands via CLI, use the following syntax:</p>
-<p><code>php bin/cli.php failed --start="yyyy-mm-dd" --end="yyyy-mm-dd" --limit=int</code></p>
-<p><code>php bin/cli.php processed --start="yyyy-mm-dd" --end="yyyy-mm-dd" --limit=int</code></p>
-<p><code>php bin/cli.php inventory</code></p>
+<pre class="highlight"><code class="language-shell">php bin/cli.php failed --start="yyyy-mm-dd" --end="yyyy-mm-dd" --limit=int</code></pre>
+<pre class="highlight"><code class="language-shell">php bin/cli.php processed --start="yyyy-mm-dd" --end="yyyy-mm-dd" --limit=int</code></pre>
+<pre class="highlight"><code class="language-shell">php bin/cli.php inventory</code></pre>
 <h2 id="tcp-message">TCP message</h2>
-<p>To use commands using TCP messages the following messages can be used:</p>
-<p><code>echo "failed --start=yyyy-mm-dd --end=yyyy-mm-dd --limit=days" | socat -t1 - TCP:host:port</code></p>
-<p><code>echo "processed --start=yyyy-mm-dd --end=yyyy-mm-dd --limit=days" | socat -t1 - TCP:host:port</code></p>
-<p>In both cases the flags are optional. Keep in mind if both <code>start</code> and <code>end</code> are set, <code>limit</code> will not be applied, it's only used when one of <code>start</code> or <code>end</code> is missing.</p>
-<p>In order to be able to test the <code>processed</code> command, by default when processing the "control" message, it is logged as successfully processed with <code>"levelName":"info"</code> simulating that the message was processed successfully. To use it run the following message:</p>
-<p><code>echo "control" | socat -t1 - TCP:host:port</code></p>
+<p>To use commands using TCP messages, the following messages can be used:</p>
+<pre class="highlight"><code class="language-shell">echo "failed --start=yyyy-mm-dd --end=yyyy-mm-dd --limit=days" | socat -t1 - TCP:host:port</code></pre>
+<pre class="highlight"><code class="language-shell">echo "processed --start=yyyy-mm-dd --end=yyyy-mm-dd --limit=days" | socat -t1 - TCP:host:port</code></pre>
+<p>In both cases, the flags are optional. Keep in mind if both <code>start</code> and <code>end</code> are set, <code>limit</code> will not be applied, it's only used when one of <code>start</code> or <code>end</code> is missing.</p>
+<p>In order to be able to test the <code>processed</code> command, by default when processing the "control" message, it is logged as successfully processed with <code>"levelName":"info"</code> simulating that the message was processed successfully. To use it, run the following message:</p>
+<pre class="highlight"><code class="language-shell">echo "control" | socat -t1 - TCP:host:port</code></pre>
 <blockquote>
 <p>Using <code>-t1</code> flag is not necessary but can be useful, it is used to set a timeout of n seconds for both reading and writing, after n second of inactivity, socat will terminate the connection. If the timeout is not set and the server does not respond or keep the connection open, the socat process could hang indefinitely.</p>
 </blockquote>
-<p><code>echo "inventory" | socat -t1 - TCP:host:port</code></p>
+<pre class="highlight"><code class="language-shell">echo "inventory" | socat -t1 - TCP:host:port</code></pre>
 
 
 

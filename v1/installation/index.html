@@ -119,6 +119,16 @@
                             </a>
                         </li>
                         
+                        <li class="dropdown-item ">
+                            <a href="https://docs.dotkernel.org/headless-documentation/" class="nav-link d-flex gap-4 align-items-center">
+                                <img alt="Dotkernel Logo" class="d-inline-block align-text-top" height="50" src="https://docs.dotkernel.org/img/dk_logomark.svg" width="45" />
+                                <div>
+                                    <span class="fw-bold d-block">Headless Platform</span>
+                                    <span>Dotkernel Headless Platform</span>
+                                </div>
+                            </a>
+                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -247,14 +257,6 @@
                 </li>
             
                 <li class="toc__entry">
-                    <a href="#edit-dist-files-from-configautoload-folder" class="toc__link nav-link">Edit .dist files from config/autoload folder</a>
-                </li>
-            
-                <li class="toc__entry">
-                    <a href="#run-composer" class="toc__link nav-link">Run Composer</a>
-                </li>
-            
-                <li class="toc__entry">
                     <a href="#create-services-daemon" class="toc__link nav-link">Create services ( daemon)</a>
                 </li>
             
@@ -280,31 +282,35 @@
 
     <h1 id="installation">INSTALLATION</h1>
 <h2 id="git-clone">git clone</h2>
-<p><code>git clone -b default-queue https://github.com/dotkernel/queue.git</code></p>
-<h2 id="edit-dist-files-from-configautoload-folder">Edit .dist files from config/autoload folder</h2>
-<ul>
-<li>local.php.dist</li>
-<li>log.local.dist</li>
-<li>messenger.local.php.dist</li>
-<li>swoole.local.php.dist</li>
-</ul>
-<h2 id="run-composer">Run Composer</h2>
-<p><code>composer install --no-dev</code></p>
+<pre class="highlight"><code class="language-shell">git clone -b default-queue https://github.com/dotkernel/queue.git
+``````
+
+## Edit .dist files from config/autoload folder
+
+- local.php.dist
+- log.local.dist
+- messenger.local.php.dist
+- swoole.local.php.dist
+
+## Run Composer
+
+```shell
+composer install --no-dev</code></pre>
 <h2 id="create-services-daemon">Create services ( daemon)</h2>
 <ul>
 <li>Edit the files from <code>/daemon</code> folder and set proper paths</li>
 <li>copy them in /etc/systemd/system/</li>
 </ul>
-<p><code>sudo cp /home/dotkernel/queue/daemon\swoole.service</code></p>
-<p><code>sudo cp /home/dotkernel/queue/daemon\messenger.service</code></p>
+<pre class="highlight"><code class="language-shell">sudo cp /home/dotkernel/queue/daemon\swoole.service</code></pre>
+<pre class="highlight"><code class="language-shell">sudo cp /home/dotkernel/queue/daemon\messenger.service</code></pre>
 <h2 id="start-the-daemon">Start the daemon</h2>
-<p><code>sudo systemctl daemon-reload</code></p>
-<p><code>sudo systemctl enable swoole.service</code></p>
-<p><code>sudo systemctl start swoole.service</code></p>
-<p><code>sudo systemctl status  swoole.service</code></p>
+<pre class="highlight"><code class="language-shell">sudo systemctl daemon-reload</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl enable swoole.service</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl start swoole.service</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl status  swoole.service</code></pre>
 <h3 id="testing-the-installation">Testing the installation</h3>
 <p>Send a request from your local machine</p>
-<p><code>echo "Hello" | socat -T1 - TCP:SERVER-IP:8556</code></p>
+<pre class="highlight"><code class="language-shell">echo "Hello" | socat -T1 - TCP:SERVER-IP:8556`</code></pre>
 
 
 

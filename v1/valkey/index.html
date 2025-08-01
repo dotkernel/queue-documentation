@@ -119,6 +119,16 @@
                             </a>
                         </li>
                         
+                        <li class="dropdown-item ">
+                            <a href="https://docs.dotkernel.org/headless-documentation/" class="nav-link d-flex gap-4 align-items-center">
+                                <img alt="Dotkernel Logo" class="d-inline-block align-text-top" height="50" src="https://docs.dotkernel.org/img/dk_logomark.svg" width="45" />
+                                <div>
+                                    <span class="fw-bold d-block">Headless Platform</span>
+                                    <span>Dotkernel Headless Platform</span>
+                                </div>
+                            </a>
+                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -273,34 +283,34 @@
     <h1 id="valkey-usage">Valkey usage</h1>
 <p>Valkey is an open source (BSD) high-performance key/value datastore that supports a variety of workloads such as caching, message queues, and can act as a primary database.</p>
 <p>The following commands can be run in the CLI to interact with Valkey. To enter CLI run:</p>
-<p><code>valkey-cli</code></p>
+<pre class="highlight"><code class="language-shell">valkey-cli</code></pre>
 <h2 id="utility-commands">Utility Commands</h2>
 <p>List all keys matching a pattern.</p>
-<p><code>KEYS *</code></p>
+<pre class="highlight"><code class="language-shell">KEYS *</code></pre>
 <p>Get server information and statistics.</p>
-<p><code>INFO</code></p>
+<pre class="highlight"><code class="language-shell">INFO</code></pre>
 <p>Check if the server is running.</p>
-<p><code>PING</code></p>
+<pre class="highlight"><code class="language-shell">PING</code></pre>
 <p>Delete all keys in all databases</p>
-<p><code>FLUSHALL</code></p>
+<pre class="highlight"><code class="language-shell">FLUSHALL</code></pre>
 <p>Check data type stored at a specific key (Possible types: string, list, set, zset, hash, stream)</p>
-<p><code>TYPE keyName</code></p>
+<pre class="highlight"><code class="language-shell">TYPE keyName</code></pre>
 <h2 id="key-value-operations">Key-Value Operations</h2>
 <p>Set a string key to a value.</p>
-<p><code>SET keyName "keyValue"</code></p>
+<pre class="highlight"><code class="language-shell">SET keyName "keyValue"</code></pre>
 <p>Get the value of a key.</p>
-<p><code>GET keyName</code></p>
+<pre class="highlight"><code class="language-shell">GET keyName</code></pre>
 <p>Delete one or more keys.</p>
-<p><code>DEL keyName1 keyName2</code></p>
+<pre class="highlight"><code class="language-shell">DEL keyName1 keyName2</code></pre>
 <h2 id="stream-commands">Stream Commands</h2>
 <p>Read entries from a stream oldest to newest (revers '-' and '+' to reverse order).</p>
-<p><code>XRANGE streamName - +</code></p>
+<pre class="highlight"><code class="language-shell">XRANGE streamName - +</code></pre>
 <p>Delete stream</p>
-<p><code>DEL streamName</code></p>
+<pre class="highlight"><code class="language-shell">DEL streamName</code></pre>
 <p>Remove all stream entries and keep stream key</p>
-<p><code>XTRIM streamName MAXLEN 0</code></p>
+<pre class="highlight"><code class="language-shell">XTRIM streamName MAXLEN 0</code></pre>
 <p>Delete specific entry</p>
-<p><code>XDEL streamName &lt;entryId&gt;</code></p>
+<pre class="highlight"><code class="language-shell">XDEL streamName &lt;entryId&gt;</code></pre>
 
 
 
