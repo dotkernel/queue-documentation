@@ -1,36 +1,36 @@
 # Server setup
 
-> Below instructions are working only on **AlmaLinux 9**
+> The below instructions are working only on **AlmaLinux 9**.
 >
->For other OS's need to be adapted accordingly
+> For other operating systems, they need to be adapted accordingly.
 
 ## Starting point
 
-A server with **AlmaLinux 9** freshly installed, with root access and updated
+A server with **AlmaLinux 9** freshly installed, up to date and with root access.
 
 ### Update OS
 
 ```shell
-dnf update
+sudo dnf update -y
 ```
 
 ### Create a new user with sudo permissions
 
 ```shell
-useradd dotkernel
+sudo useradd dotkernel
 ```
 
 ```shell
-passwd dotkernel
+sudo passwd dotkernel
 ```
 
 ```shell
-usermod -aG wheel dotkernel
+sudo usermod -aG wheel dotkernel
 ```
 
-### reboot
+> Reboot server.
 
-### SSH to the server as new user
+> SSH into the server as `dotkernel`.
 
 ### Install various utilities
 
@@ -100,11 +100,13 @@ sudo valkey-cli ping
 sudo dnf install php-pecl-redis
 ```
 
+Make sure that the module is installed.
+
 ```shell
 php -i | grep redis
 ```
 
-### GIT
+### Git
 
 ```shell
 sudo dnf install git
@@ -126,8 +128,7 @@ php composer-installer.php --filename=composer --install-dir=/usr/local/bin
 
 ### Firewall setup
 
-In order to add a minimum level of security, a firewall needs to be installed and allows  
-connections from outside only to certain ports, from certain IP.
+To add a minimum level of security, a firewall needs to be installed and allow connections from outside only to certain ports, from certain IPs.
 
 > Firewall setup is not mandatory
 
@@ -139,17 +140,20 @@ sudo dnf install firewalld
 sudo systemctl enable firewalld
 ```
 
-> Before starting the firewall, be sure you will not be locked outside
+> Before starting the firewall, make sure you will not get locked outside:
 
 ```shell
 sudo firewall-offline-cmd --zone=public --add-port=22/tcp --permanent
 ```
 
+Then enable the firewall:
+
 ```shell
 sudo systemctl start firewalld
 ```
 
-> By default, Swoole runs on port 8556. You can change that in the configuration file.
+> By default, Swoole runs on port **8556**.
+> You can change that in the configuration file.
 
 ```shell
 sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="YOUR_IP_ADDRESS" port port="8556" protocol="tcp" accept'
@@ -159,4 +163,4 @@ sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address
 sudo firewall-cmd --reload
 ```
 
-### NOW THE SERVER IS READY
+> NOW THE SERVER IS READY
