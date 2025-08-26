@@ -2,7 +2,7 @@
 
 Dotkernel component used to queue tasks to be processed asynchronously based on [netglue/laminas-messenger](https://github.com/netglue/laminas-messenger)
 
-A queue system is a vital component in modern web applications that enables the decoupling of certain tasks from the regular request-response cycle.
+A queue system is a vital part in modern web applications that enables the decoupling of certain tasks from the regular request-response cycle.
 
 This is especially useful for time-consuming and resource-intensive operations which are thus handled asynchronously by background workers on a separate system.
 

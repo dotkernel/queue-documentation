@@ -4,14 +4,14 @@
 
 ```shell
 git clone -b default-queue https://github.com/dotkernel/queue.git
-``````
+```
 
-## Edit .dist files from config/autoload folder
+## Prepare `config/autoload` files
 
-- local.php.dist
-- log.local.dist
-- messenger.local.php.dist
-- swoole.local.php.dist
+- duplicate `local.php.dist` as `local.php`, then fill in the database credentials and set the `$baseUrl`
+- duplicate `log.local.dist` as `log.local`
+- duplicate `messenger.local.php.dist` as `messenger.local.php`
+- duplicate `swoole.local.php.dist` as `swoole.local.php`
 
 ## Run Composer
 
@@ -19,7 +19,7 @@ git clone -b default-queue https://github.com/dotkernel/queue.git
 composer install --no-dev
 ```
 
-## Create services ( daemon)
+## Create services (daemon)
 
 - Edit the files from `/daemon` folder and set proper paths
 - copy them in /etc/systemd/system/

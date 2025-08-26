@@ -1,8 +1,9 @@
 # Valkey usage
 
-Valkey is an open source (BSD) high-performance key/value datastore that supports a variety of workloads such as caching, message queues, and can act as a primary database.
+Valkey is an open source (BSD) high-performance key/value datastore that supports a variety of workloads such as caching, message queues and can act as a primary database.
 
-The following commands can be run in the CLI to interact with Valkey. To enter CLI run:
+The following commands can be run in the CLI to interact with Valkey.
+To enter the CLI, run:
 
 ```shell
 valkey-cli
@@ -16,25 +17,25 @@ List all keys matching a pattern.
 KEYS *
 ```
 
-Get server information and statistics.
+Get server information and statistics:
 
 ```shell
 INFO
 ```
 
-Check if the server is running.
+Check if the server is running:
 
 ```shell
 PING
 ```
 
-Delete all keys in all databases
+Delete all keys in all databases:
 
 ```shell
 FLUSHALL
 ```
 
-Check data type stored at a specific key (Possible types: string, list, set, zset, hash, stream)
+Check data type stored at a specific key (Possible types: string, list, set, zset, hash, stream):
 
 ```shell
 TYPE keyName
@@ -42,19 +43,19 @@ TYPE keyName
 
 ## Key-Value Operations
 
-Set a string key to a value.
+Set a string key to a value:
 
 ```shell
 SET keyName "keyValue"
 ```
 
-Get the value of a key.
+Get the value of a key:
 
 ```shell
 GET keyName
 ```
 
-Delete one or more keys.
+Delete one or more keys:
 
 ```shell
 DEL keyName1 keyName2
@@ -62,25 +63,25 @@ DEL keyName1 keyName2
 
 ## Stream Commands
 
-Read entries from a stream oldest to newest (revers '-' and '+' to reverse order).
+Read entries from a stream oldest to newest (revers '-' and '+' to reverse order):
 
 ```shell
 XRANGE streamName - +
 ```
 
-Delete stream
+Delete stream:
 
 ```shell
 DEL streamName
 ```
 
-Remove all stream entries and keep stream key
+Remove all stream entries while also keeping the stream key:
 
 ```shell
 XTRIM streamName MAXLEN 0
 ```
 
-Delete specific entry
+Delete a specific entry:
 
 ```shell
 XDEL streamName <entryId>
