@@ -257,7 +257,15 @@
                 </li>
             
                 <li class="toc__entry">
-                    <a href="#create-services-daemon" class="toc__link nav-link">Create services ( daemon)</a>
+                    <a href="#prepare-configautoload-files" class="toc__link nav-link">Prepare config/autoload files</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#run-composer" class="toc__link nav-link">Run Composer</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#create-services-daemon" class="toc__link nav-link">Create services (daemon)</a>
                 </li>
             
                 <li class="toc__entry">
@@ -282,21 +290,17 @@
 
     <h1 id="installation">INSTALLATION</h1>
 <h2 id="git-clone">git clone</h2>
-<pre class="highlight"><code class="language-shell">git clone -b default-queue https://github.com/dotkernel/queue.git
-``````
-
-## Edit .dist files from config/autoload folder
-
-- local.php.dist
-- log.local.dist
-- messenger.local.php.dist
-- swoole.local.php.dist
-
-## Run Composer
-
-```shell
-composer install --no-dev</code></pre>
-<h2 id="create-services-daemon">Create services ( daemon)</h2>
+<pre class="highlight"><code class="language-shell">git clone -b default-queue https://github.com/dotkernel/queue.git</code></pre>
+<h2 id="prepare-configautoload-files">Prepare <code>config/autoload</code> files</h2>
+<ul>
+<li>duplicate <code>local.php.dist</code> as <code>local.php</code>, then fill in the database credentials and set the <code>$baseUrl</code></li>
+<li>duplicate <code>log.local.dist</code> as <code>log.local</code></li>
+<li>duplicate <code>messenger.local.php.dist</code> as <code>messenger.local.php</code></li>
+<li>duplicate <code>swoole.local.php.dist</code> as <code>swoole.local.php</code></li>
+</ul>
+<h2 id="run-composer">Run Composer</h2>
+<pre class="highlight"><code class="language-shell">composer install --no-dev</code></pre>
+<h2 id="create-services-daemon">Create services (daemon)</h2>
 <ul>
 <li>Edit the files from <code>/daemon</code> folder and set proper paths</li>
 <li>copy them in /etc/systemd/system/</li>
