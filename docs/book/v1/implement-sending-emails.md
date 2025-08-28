@@ -37,8 +37,9 @@ Also here under the "autoload" → "psr-4" key make sure you add all the modules
         "Core\\Setting\\": "src/Core/src/Setting/src",
         "Core\\User\\": "src/Core/src/User/src",
     }
-},
+}
 ```
+
 ## Step 3 Install new dependencies
 
 Install all new dependencies using:
@@ -64,6 +65,7 @@ Core\Security\ConfigProvider::class,
 Core\Setting\ConfigProvider::class,
 Core\User\ConfigProvider::class,
 ```
+
 ## Step 5 Database connection
 
 Navigate to `config/autoload/local.php` and fill in the database connection details.
