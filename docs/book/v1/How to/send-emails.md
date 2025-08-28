@@ -5,6 +5,7 @@ Using a queuing service solves problems such as server overload. For example, if
 A concrete example is sending emails. While a series of tasks are running on the server, a task such as sending an email is sent to a queue and run in the background so the server can move on to the next task, while the queue composes the email and sends it. Tasks are queued and processed gradually (FIFO), depending on available resources.
 
 To implement such a service, the [`send-email`](https://github.com/dotkernel/queue/tree/send-email) branch can be taken as a model.
+
 > **_NOTE:_**  The default branch 1.0 hold only the base code of Queue and provides essential features such as:
 > * Adding messages to the queue
 > * Retrieving and processing messages (FIFO)
