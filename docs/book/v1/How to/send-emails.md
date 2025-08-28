@@ -6,7 +6,8 @@ A concrete example is sending emails. While a series of tasks are running on the
 
 To implement such a service, the [`send-email`](https://github.com/dotkernel/queue/tree/send-email) branch can be taken as a model.
 
-> **_NOTE:_**  The default branch 1.0 hold only the base code of Queue and provides essential features such as:
+> **_NOTE:_**  The default branch 1.0 holds only the base code of Queue and provides essential features such as:
+>
 > * Adding messages to the queue
 > * Retrieving and processing messages (FIFO)
 
