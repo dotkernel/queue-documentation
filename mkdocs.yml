@@ -13,6 +13,8 @@ nav:
       - Installation: v1/installation.md
       - Commands: v1/commands.md
       - Valkey: v1/valkey.md
+      - How to:
+          - Send Emails: v1/send-emails.md
 site_name: queue
 site_description: "Dotkernel Queue"
 repo_url: "https://github.com/dotkernel/queue"
