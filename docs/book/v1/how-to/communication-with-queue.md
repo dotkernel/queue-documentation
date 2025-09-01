@@ -29,6 +29,7 @@ if (! $client) {
     // close connection 
 }
 ```
+
 ## Object-oriented approach
 
 Using object-oriented approach, queue is accessed through dedicated classes and objects. Instead of calling functions directly, you instantiate objects that encapsulate the behavior of the queue. This approach offers reusability, maintainability, and cleaner separation of responsibilities, which is especially beneficial in larger applications.
@@ -145,6 +146,7 @@ class NotificationService
     //create your own custom methods to process data
 }
 ```
+
 ## Step 2 Install new dependencies
 
 After you have finished creating the new files, navigate to composer.json and add the new dependencies under the require key:
@@ -159,7 +161,6 @@ Install new dependencies using:
 ```shell
 composer install
 ```
-
 
 Under the `autoload` → `psr-4` key add the newly created module:
 
