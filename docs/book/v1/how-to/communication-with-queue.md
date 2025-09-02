@@ -6,7 +6,7 @@ Communication with the  [`Dotkernel Queue`](https://github.com/dotkernel/queue) 
 
 The main advantage of the procedural code is its simplicity, it directly connects to the queue server, sends the prepared data, and then closes the connection. In this example, the code opens a TCP connection to `localhost:8556`, checks if the connection is successful, sends data in JSON format, and closes the socket. This makes the logic easy to follow and quick to implement. The disadvantage of this approach is the difficulty of reusing and extending the code. As the complexity of the project increases by repeatedly using this approach, the code becomes more difficult to maintain and not as flexible compared to the object-oriented approach.
 
-```shell
+```php
 // collect the PAYLOAD that will be sent to Dotkernel Queue 
 $data = $anyTypeOfData;
 
@@ -44,7 +44,7 @@ Inside it, create a new `ConfigProvider.php`, a new `NotificationService.php` an
 
 ConfigProvider code:
 
-```shell
+```php
 <?php
 
 declare(strict_types=1);
@@ -90,7 +90,7 @@ class ConfigProvider
 
 Service code:
 
-```shell
+```php
 <?php
 
 declare(strict_types=1);
@@ -151,7 +151,7 @@ class NotificationService
 
 After you have finished creating the new files, navigate to composer.json and add the new dependencies under the require key:
 
-```shell
+```php
 "ext-sockets": "*",
 "clue/socket-raw": "^v1.6.0",
 ```
@@ -164,7 +164,7 @@ composer install
 
 Under the `autoload` → `psr-4` key add the newly created module:
 
-```shell
+```php
 "Core\\NotificationSystem\\": "src/Core/src/NotificationSystem/src"
 ```
 
@@ -177,7 +177,7 @@ Navigate to `config/config.php` and add your new Core ConfigProvider `Core\Notif
 After you have added the new config provider, navigate to `config/autoload/local.php` and add a new config key used for server connection.
 > **_NOTE:_**  if you only have the local.php.dist file, duplicate it, and delete .dist from the copy's name.
 
-```shell
+```php
 'notification' => [
         'server' => [
             'protocol' => 'tcp',
@@ -192,7 +192,7 @@ After you have added the new config provider, navigate to `config/autoload/local
 
 Navigate to your handler, inject the new service and use your custom method where needed.
 
-```shell
+```php
     #[Inject(
         NotificationService::class
     )]

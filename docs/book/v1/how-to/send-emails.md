@@ -19,7 +19,7 @@ Importing the Core is essential for the queue to communicate with the main appli
 
 After adding the Core, you need to make sure all external dependencies are included in composer.json. Without them, Core functionalities (cache, mail, authentication, etc.) won’t work in the queue.
 
-```shell
+```php
 "dotkernel/dot-cache": "^4.3",
 "dotkernel/dot-data-fixtures": "^1.4.0",
 "dotkernel/dot-errorhandler": "4.2.1",
@@ -34,7 +34,7 @@ After adding the Core, you need to make sure all external dependencies are inclu
 
 Adding Core modules under `autoload` → `psr-4` enables automatic class loading, so you don’t have to manually require each class.
 
-```shell
+```php
 "autoload": {
     "psr-4": {
         "Queue\\": "src/",
@@ -61,7 +61,7 @@ Running `composer install` ensures that all packages required for Core and the q
 
 Navigate to `config/config.php` and add `ConfigProvider::class` file from all packages you installed.
 
-```shell
+```php
 Mezzio\Twig\ConfigProvider::class,
 Dot\Cache\ConfigProvider::class,
 Dot\DataFixtures\ConfigProvider::class,
@@ -80,7 +80,7 @@ Core\User\ConfigProvider::class,
 Navigate to `config/autoload/local.php` and fill in the database connection details.
 > **_NOTE:_**  if you only have the local.php.dist file, duplicate it, and delete .dist from the copy's name.
 
-```shell
+```php
 $databases = [
     'default' => [
         'host'     => '',
