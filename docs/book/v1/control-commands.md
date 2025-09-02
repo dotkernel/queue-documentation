@@ -3,7 +3,7 @@
 The commands available are:
 
 1. `GetFailedMessagesCommand.php (failed)` - returns logs with messages that failed to process (levelName:error)
-2. `GetProcessedMessagesCommand.php (procecssed)` - returns logs with messages that were successfully processed (levelName:info)
+2. `GetProcessedMessagesCommand.php (processed)` - returns logs with messages that were successfully processed (levelName:info)
 3. `GetQueuedMessagesCommand (inventory)` - returns all queued messages from Redis stream 'messages'
 
 The commands can be run in two different ways:
