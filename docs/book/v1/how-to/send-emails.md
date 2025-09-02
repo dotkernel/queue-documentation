@@ -19,31 +19,35 @@ Importing the Core is essential for the queue to communicate with the main appli
 
 After adding the Core, you need to make sure all external dependencies are included in composer.json. Without them, Core functionalities (cache, mail, authentication, etc.) won’t work in the queue.
 
-```shell
-"dotkernel/dot-cache": "^4.3",
-"dotkernel/dot-data-fixtures": "^1.4.0",
-"dotkernel/dot-errorhandler": "4.2.1",
-"dotkernel/dot-mail": "^5.3.0",
-"laminas/laminas-authentication": "2.18.0",
-"mezzio/mezzio-authentication-oauth2": "^2.11",
-"mezzio/mezzio-twigrenderer": "^2.17.0",
-"ramsey/uuid": "^4.5.0",
-"ramsey/uuid-doctrine": "^2.1.0",
-"roave/psr-container-doctrine": "^5.2.2",
+```json
+{
+  "dotkernel/dot-cache": "^4.3",
+  "dotkernel/dot-data-fixtures": "^1.4.0",
+  "dotkernel/dot-errorhandler": "4.2.1",
+  "dotkernel/dot-mail": "^5.3.0",
+  "laminas/laminas-authentication": "2.18.0",
+  "mezzio/mezzio-authentication-oauth2": "^2.11",
+  "mezzio/mezzio-twigrenderer": "^2.17.0",
+  "ramsey/uuid": "^4.5.0",
+  "ramsey/uuid-doctrine": "^2.1.0",
+  "roave/psr-container-doctrine": "^5.2.2"
+}
 ```
 
 Adding Core modules under `autoload` → `psr-4` enables automatic class loading, so you don’t have to manually require each class.
 
-```shell
-"autoload": {
+```json
+{
+  "autoload": {
     "psr-4": {
-        "Queue\\": "src/",
-        "Core\\Admin\\": "src/Core/src/Admin/src",
-        "Core\\App\\": "src/Core/src/App/src",
-        "Core\\Security\\": "src/Core/src/Security/src",
-        "Core\\Setting\\": "src/Core/src/Setting/src",
-        "Core\\User\\": "src/Core/src/User/src",
+      "Queue\\": "src/",
+      "Core\\Admin\\": "src/Core/src/Admin/src",
+      "Core\\App\\": "src/Core/src/App/src",
+      "Core\\Security\\": "src/Core/src/Security/src",
+      "Core\\Setting\\": "src/Core/src/Setting/src",
+      "Core\\User\\": "src/Core/src/User/src",
     }
+  }
 }
 ```
 
@@ -61,7 +65,7 @@ Running `composer install` ensures that all packages required for Core and the q
 
 Navigate to `config/config.php` and add `ConfigProvider::class` file from all packages you installed.
 
-```shell
+```php
 Mezzio\Twig\ConfigProvider::class,
 Dot\Cache\ConfigProvider::class,
 Dot\DataFixtures\ConfigProvider::class,
@@ -80,7 +84,7 @@ Core\User\ConfigProvider::class,
 Navigate to `config/autoload/local.php` and fill in the database connection details.
 > **_NOTE:_**  if you only have the local.php.dist file, duplicate it, and delete .dist from the copy's name.
 
-```shell
+```php
 $databases = [
     'default' => [
         'host'     => '',
