@@ -1,4 +1,4 @@
-# COMUNICATE WITH QUEUE
+# COMMUNICATE WITH QUEUE
 
 Communication with the  [`Dotkernel Queue`](https://github.com/dotkernel/queue) can be achieved in two different ways: procedural and object-oriented.
 
@@ -10,8 +10,8 @@ The main advantage of the procedural code is its simplicity, it directly connect
 // collect the PAYLOAD that will be sent to Dotkernel Queue 
 $data = $anyTypeOfData;
 
-// open TCP connection to Dotkernel Queue 
-// replace localhost with the IP of the Dotkernel Queue 
+// open TCP connection to Dotkernel Queue server
+// replace localhost with the IP of the Dotkernel Queue server
 // replace 8556 with the port number 
 $client = stream_socket_client("tcp://localhost:8556", $errno, $errstr, 30);
 
