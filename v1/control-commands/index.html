@@ -18,11 +18,11 @@
         <meta name="docsearch:component" content="queue">
 
         
-        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/">
+        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v1/control-commands/">
         
         <link rel="shortcut icon" href="https://docs.dotkernel.org/img/dk_docs_favicon_white.svg">
 
-        <title>queue - Dotkernel Documentation</title>
+        <title>Control Commands - queue - Dotkernel Documentation</title>
 
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap.css">
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap-icons.min.css">
@@ -169,7 +169,16 @@
                 
 
                 
-                    <li class="breadcrumb-item">queue</li>
+                    <li class="breadcrumb-item"><a href="../..">queue</a></li>
+
+                    
+                        
+                            
+                            
+                        
+                    
+
+                    <li class="breadcrumb-item active" aria-current="page">Control Commands</li>
                 
             
         </ol>
@@ -184,7 +193,7 @@
                     
     <div class="subnavigation hidden-print">
 <!--        <h4 class="subnavigation__title">-->
-<!--            <a href=".">queue</a>-->
+<!--            <a href="../..">queue</a>-->
 <!--        </h4>-->
 
         <h5 class="subnavigation__title">Table of Contents</h5>
@@ -197,31 +206,31 @@
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="v1/overview/" class="subnavigation__link">Overview</a>
+    <a href="../overview/" class="subnavigation__link">Overview</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="v1/server-setup/" class="subnavigation__link">Server Setup</a>
+    <a href="../server-setup/" class="subnavigation__link">Server Setup</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="v1/installation/" class="subnavigation__link">Installation</a>
+    <a href="../installation/" class="subnavigation__link">Installation</a>
+</li>
+
+                    
+                        
+<li class="subnavigation__list-item subnavigation__list-item--active">
+    <a href="./" class="subnavigation__link">Control Commands</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="v1/control-commands/" class="subnavigation__link">Control Commands</a>
-</li>
-
-                    
-                        
-<li class="subnavigation__list-item ">
-    <a href="v1/valkey/" class="subnavigation__link">Valkey</a>
+    <a href="../valkey/" class="subnavigation__link">Valkey</a>
 </li>
 
                     
@@ -249,13 +258,13 @@
         
         
 <li class="subnavigation__list-item ">
-    <a href="v1/how-to/communication-with-queue/" class="subnavigation__link">Communication With Queue</a>
+    <a href="../how-to/communication-with-queue/" class="subnavigation__link">Communication With Queue</a>
 </li>
 
         
         
 <li class="subnavigation__list-item ">
-    <a href="v1/how-to/send-emails/" class="subnavigation__link">Send Emails</a>
+    <a href="../how-to/send-emails/" class="subnavigation__link">Send Emails</a>
 </li>
 
         
@@ -272,6 +281,28 @@
 
                     
                     
+                    
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+            
+                <li class="toc__entry">
+                    <a href="#cli" class="toc__link nav-link">CLI</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#tcp-message" class="toc__link nav-link">TCP message</a>
+                </li>
+            
+            </ul>
+        </div>
+    
+
+                    
                 </div>
                 <div class="col-lg-9 main_docs">
                     
@@ -279,23 +310,34 @@
 
 
 
+
     
-    <h1>queue</h1>
-    <p>Dotkernel Queue</p>
-    <h2>Installation</h2>
-    <h3>Using Composer</h3>
-    <pre class="highlight line-numbers">
-        <i class="bi bi-copy copy_btn" onclick="copy(this)"></i>
-        <code class="language-bash">composer require dotkernel/queue</code>
-    </pre>
+    
 
-
-<h2>Support</h2>
-<ul>
-    <li>Discussions: <a href="https://github.com/orgs/dotkernel/discussions" target="_blank">https://github.com/orgs/dotkernel/discussions</a></li>
-    <li>Issues: <a href="https://github.com/dotkernel/queue/issues" target="_blank">github.com/dotkernel/queue/issues</a></li>
-    <li>Source: <a href="https://github.com/dotkernel/queue" target="_blank">github.com/dotkernel/queue</a></li>
-</ul>
+    <h1 id="available-commands-and-usage">Available commands and usage</h1>
+<p>The commands available are:</p>
+<ol>
+<li><code>GetFailedMessagesCommand.php (failed)</code> - returns logs with messages that failed to process (levelName:error)</li>
+<li><code>GetProcessedMessagesCommand.php (processed)</code> - returns logs with messages that were successfully processed (levelName:info)</li>
+<li><code>GetQueuedMessagesCommand (inventory)</code> - returns all queued messages from Redis stream 'messages'</li>
+</ol>
+<p>The commands can be run in two different ways:</p>
+<h2 id="cli">CLI</h2>
+<p>To run the commands via CLI, use the following syntax:</p>
+<pre class="highlight"><code class="language-shell">php bin/cli.php failed --start="yyyy-mm-dd" --end="yyyy-mm-dd" --limit=int</code></pre>
+<pre class="highlight"><code class="language-shell">php bin/cli.php processed --start="yyyy-mm-dd" --end="yyyy-mm-dd" --limit=int</code></pre>
+<pre class="highlight"><code class="language-shell">php bin/cli.php inventory</code></pre>
+<h2 id="tcp-message">TCP message</h2>
+<p>To use commands using TCP messages, the following messages can be used:</p>
+<pre class="highlight"><code class="language-shell">echo "failed --start=yyyy-mm-dd --end=yyyy-mm-dd --limit=days" | socat -t1 - TCP:host:port</code></pre>
+<pre class="highlight"><code class="language-shell">echo "processed --start=yyyy-mm-dd --end=yyyy-mm-dd --limit=days" | socat -t1 - TCP:host:port</code></pre>
+<p>In both cases, the flags are optional. Keep in mind if both <code>start</code> and <code>end</code> are set, <code>limit</code> will not be applied, it's only used when one of <code>start</code> or <code>end</code> is missing.</p>
+<p>To be able to test the <code>processed</code> command, by default when processing the "control" message, it is logged as successfully processed with <code>"levelName":"info"</code> simulating that the message was processed successfully. To use it, run the following message:</p>
+<pre class="highlight"><code class="language-shell">echo "control" | socat -t1 - TCP:host:port</code></pre>
+<blockquote>
+<p>Using <code>-t1</code> flag is not necessary but can be useful, it is used to set a timeout of n seconds for both reading and writing; after n second of inactivity, socat will terminate the connection. If the timeout is not set and the server does not respond or keep the connection open, the socat process could freeze indefinitely.</p>
+</blockquote>
+<pre class="highlight"><code class="language-shell">echo "inventory" | socat -t1 - TCP:host:port</code></pre>
 
 
 
@@ -305,13 +347,18 @@
         
         <li class="col text-nowrap text-md-start">
             
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../installation/">
+                    <i class="bi bi-chevron-left"></i>
+                    Installation
+                </a>
+            
         </li>
 
         
         <li class="col text-nowrap text-md-end pe-0">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="v1/overview/">
-                    Overview
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../valkey/">
+                    Valkey
                     <i class="bi bi-chevron-right"></i>
                 </a>
             
@@ -430,7 +477,7 @@
 </footer>
 
         <script>
-            let base_url = '.',
+            let base_url = '../..',
                 project  = "queue",
                 siteName = 'queue';
 
@@ -463,8 +510,3 @@
 </div>-->
     </body>
 </html>
-
-<!--
-MkDocs version : 1.6.1
-Build Date UTC : 2025-09-02 09:37:10.240979+00:00
--->

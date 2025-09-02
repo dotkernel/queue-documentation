@@ -18,11 +18,11 @@
         <meta name="docsearch:component" content="queue">
 
         
-        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/">
+        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v1/how-to/communication-with-queue/">
         
         <link rel="shortcut icon" href="https://docs.dotkernel.org/img/dk_docs_favicon_white.svg">
 
-        <title>queue - Dotkernel Documentation</title>
+        <title>Communication With Queue - queue - Dotkernel Documentation</title>
 
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap.css">
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap-icons.min.css">
@@ -169,7 +169,23 @@
                 
 
                 
-                    <li class="breadcrumb-item">queue</li>
+                    <li class="breadcrumb-item"><a href="../../..">queue</a></li>
+
+                    
+                        
+                            
+                            
+                        
+                    
+                        
+                            
+                            
+                                <li class="breadcrumb-item">How to</li>
+                            
+                        
+                    
+
+                    <li class="breadcrumb-item active" aria-current="page">Communication With Queue</li>
                 
             
         </ol>
@@ -184,7 +200,7 @@
                     
     <div class="subnavigation hidden-print">
 <!--        <h4 class="subnavigation__title">-->
-<!--            <a href=".">queue</a>-->
+<!--            <a href="../../..">queue</a>-->
 <!--        </h4>-->
 
         <h5 class="subnavigation__title">Table of Contents</h5>
@@ -197,31 +213,31 @@
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="v1/overview/" class="subnavigation__link">Overview</a>
+    <a href="../../overview/" class="subnavigation__link">Overview</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="v1/server-setup/" class="subnavigation__link">Server Setup</a>
+    <a href="../../server-setup/" class="subnavigation__link">Server Setup</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="v1/installation/" class="subnavigation__link">Installation</a>
+    <a href="../../installation/" class="subnavigation__link">Installation</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="v1/control-commands/" class="subnavigation__link">Control Commands</a>
+    <a href="../../control-commands/" class="subnavigation__link">Control Commands</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="v1/valkey/" class="subnavigation__link">Valkey</a>
+    <a href="../../valkey/" class="subnavigation__link">Valkey</a>
 </li>
 
                     
@@ -248,14 +264,14 @@
     <ul class="subnavigation__list collapse" id="how-to">
         
         
-<li class="subnavigation__list-item ">
-    <a href="v1/how-to/communication-with-queue/" class="subnavigation__link">Communication With Queue</a>
+<li class="subnavigation__list-item subnavigation__list-item--active">
+    <a href="./" class="subnavigation__link">Communication With Queue</a>
 </li>
 
         
         
 <li class="subnavigation__list-item ">
-    <a href="v1/how-to/send-emails/" class="subnavigation__link">Send Emails</a>
+    <a href="../send-emails/" class="subnavigation__link">Send Emails</a>
 </li>
 
         
@@ -272,6 +288,44 @@
 
                     
                     
+                    
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+            
+                <li class="toc__entry">
+                    <a href="#procedural-approach" class="toc__link nav-link">Procedural approach</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#object-oriented-approach" class="toc__link nav-link">Object-oriented approach</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#step-1-notificationsystem-module" class="toc__link nav-link">Step 1 NotificationSystem module</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#step-2-install-new-dependencies" class="toc__link nav-link">Step 2 Install new dependencies</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#step-3-configuration" class="toc__link nav-link">Step 3 Configuration</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#step-4-service-usage" class="toc__link nav-link">Step 4 Service usage</a>
+                </li>
+            
+            </ul>
+        </div>
+    
+
+                    
                 </div>
                 <div class="col-lg-9 main_docs">
                     
@@ -279,23 +333,171 @@
 
 
 
+
     
-    <h1>queue</h1>
-    <p>Dotkernel Queue</p>
-    <h2>Installation</h2>
-    <h3>Using Composer</h3>
-    <pre class="highlight line-numbers">
-        <i class="bi bi-copy copy_btn" onclick="copy(this)"></i>
-        <code class="language-bash">composer require dotkernel/queue</code>
-    </pre>
+    
+<!--        <h2 class="chapter__headline text-black-50">How to</h2>-->
+    
 
+    <h1 id="communicate-with-queue">COMMUNICATE WITH QUEUE</h1>
+<p>Communication with the  <a href="https://github.com/dotkernel/queue"><code>Dotkernel Queue</code></a> can be achieved in two different ways: procedural and object-oriented.</p>
+<h2 id="procedural-approach">Procedural approach</h2>
+<p>The main advantage of the procedural code is its simplicity, it directly connects to the queue server, sends the prepared data, and then closes the connection. In this example, the code opens a TCP connection to <code>localhost:8556</code>, checks if the connection is successful, sends data in JSON format, and closes the socket. This makes the logic easy to follow and quick to implement. The disadvantage of this approach is the difficulty of reusing and extending the code. As the complexity of the project increases by repeatedly using this approach, the code becomes more difficult to maintain and not as flexible compared to the object-oriented approach.</p>
+<pre class="highlight"><code class="language-shell">// collect the PAYLOAD that will be sent to Dotkernel Queue 
+$data = $anyTypeOfData;
 
-<h2>Support</h2>
-<ul>
-    <li>Discussions: <a href="https://github.com/orgs/dotkernel/discussions" target="_blank">https://github.com/orgs/dotkernel/discussions</a></li>
-    <li>Issues: <a href="https://github.com/dotkernel/queue/issues" target="_blank">github.com/dotkernel/queue/issues</a></li>
-    <li>Source: <a href="https://github.com/dotkernel/queue" target="_blank">github.com/dotkernel/queue</a></li>
-</ul>
+// open TCP connection to Dotkernel Queue server
+// replace localhost with the IP of the Dotkernel Queue server
+// replace 8556 with the port number 
+$client = stream_socket_client("tcp://localhost:8556", $errno, $errstr, 30);
+
+if (! $client) {
+    // log errors
+    error_log("Connection error: $errstr ($errno)");
+} else {
+    // send the PAYLOAD to Dotkernel Queue 
+    fwrite($client, json_encode($data) . "\n");
+    // make sure your message ends with a new line
+    // this allows the stream to know when the message is complete
+    // without it, the server might keep waiting, and not process what was sent
+
+    fclose($client);
+    // close connection 
+}</code></pre>
+<h2 id="object-oriented-approach">Object-oriented approach</h2>
+<p>Using object-oriented approach, queue is accessed through dedicated classes and objects. Instead of calling functions directly, you instantiate objects that encapsulate the behavior of the queue. This approach offers reusability, maintainability, and cleaner separation of responsibilities, which is especially beneficial in larger applications.</p>
+<p>To implement this approach you need to follow a few simple steps:</p>
+<h2 id="step-1-notificationsystem-module">Step 1 NotificationSystem module</h2>
+<p>Create a new directory under the Core directory with the name NotificationSystem or any other name.</p>
+<p>Inside it, create a new <code>ConfigProvider.php</code>, a new <code>NotificationService.php</code> and then copy the code below.</p>
+<p>ConfigProvider code:</p>
+<pre class="highlight"><code class="language-shell">&lt;?php
+
+declare(strict_types=1);
+
+namespace Core\NotificationSystem;
+
+use Core\NotificationSystem\Service\NotificationService;
+use Dot\DependencyInjection\Factory\AttributedServiceFactory;
+
+/**
+ * @phpstan-type ConfigType array{
+ *      dependencies: DependenciesType,
+ * }
+ * @phpstan-type DependenciesType array{
+ *       factories: array&lt;class-string, class-string&gt;,
+ * }
+ */
+class ConfigProvider
+{
+    /**
+     * @return ConfigType
+     */
+    public function __invoke(): array
+    {
+        return [
+            'dependencies' =&gt; $this-&gt;getDependencies(),
+        ];
+    }
+
+    /**
+     * @return DependenciesType
+     */
+    public function getDependencies(): array
+    {
+        return [
+            'factories' =&gt; [
+                NotificationService::class =&gt; AttributedServiceFactory::class,
+            ],
+        ];
+    }
+}</code></pre>
+<p>Service code:</p>
+<pre class="highlight"><code class="language-shell">&lt;?php
+
+declare(strict_types=1);
+
+namespace Core\NotificationSystem\Service;
+
+use Core\User\Entity\User;
+use Dot\DependencyInjection\Attribute\Inject;
+use Laminas\Json\Encoder;
+use Socket\Raw\Factory;
+use Socket\Raw\Socket;
+
+class NotificationService
+{
+    #[Inject(
+        'config.notification.server',
+    )]
+    public function __construct(
+        // $config from local.php (see step 3)
+        private readonly array $config
+    ) {
+    }
+
+    // open TCP connection to Dotkernel Queue
+    public function createClient(): Socket
+    {
+        $socketRawFactory = new Factory();
+        return $socketRawFactory-&gt;createClient(
+            $this-&gt;config['protocol'] . '://' . $this-&gt;config['host'] . ':' . $this-&gt;config['port']
+        );
+    }
+
+    // send the PAYLOAD to Dotkernel Queue 
+    public function send(string $message): void
+    {
+        $this-&gt;createClient()-&gt;write($message . $this-&gt;config['eof']);
+    }
+
+    // encode processed data
+    protected function encodeEmailMessage(array $data): string
+    {
+        return Encoder::encode($data);
+    }
+
+    // process and send data
+    // change $data type depending on what you need 
+    public function sendNewAccountNotification(mixed $data): void
+    {
+        $data['yourKey'] = $data;
+        $this-&gt;send($this-&gt;encodeEmailMessage($data));
+    }
+
+    //create your own custom methods to process data
+}</code></pre>
+<h2 id="step-2-install-new-dependencies">Step 2 Install new dependencies</h2>
+<p>After you have finished creating the new files, navigate to composer.json and add the new dependencies under the require key:</p>
+<pre class="highlight"><code class="language-shell">"ext-sockets": "*",
+"clue/socket-raw": "^v1.6.0",</code></pre>
+<p>Install new dependencies using:</p>
+<pre class="highlight"><code class="language-shell">composer install</code></pre>
+<p>Under the <code>autoload</code> → <code>psr-4</code> key add the newly created module:</p>
+<pre class="highlight"><code class="language-shell">"Core\\NotificationSystem\\": "src/Core/src/NotificationSystem/src"</code></pre>
+<p>Run <code>composer dump-autoload</code> to regenerate Composer’s autoload files.</p>
+<h2 id="step-3-configuration">Step 3 Configuration</h2>
+<p>Navigate to <code>config/config.php</code> and add your new Core ConfigProvider <code>Core\NotificationSystem\ConfigProvider::class</code>.</p>
+<p>After you have added the new config provider, navigate to <code>config/autoload/local.php</code> and add a new config key used for server connection.</p>
+<blockquote>
+<p><strong><em>NOTE:</em></strong>  if you only have the local.php.dist file, duplicate it, and delete .dist from the copy's name.</p>
+</blockquote>
+<pre class="highlight"><code class="language-shell">'notification' =&gt; [
+        'server' =&gt; [
+            'protocol' =&gt; 'tcp',
+            'host'     =&gt; 'IP of the Dotkernel Queue ',
+            'port'     =&gt; 'port number',
+            'eof'      =&gt; "\n",
+        ],
+    ],</code></pre>
+<h2 id="step-4-service-usage">Step 4 Service usage</h2>
+<p>Navigate to your handler, inject the new service and use your custom method where needed.</p>
+<pre class="highlight"><code class="language-shell">    #[Inject(
+        NotificationService::class
+    )]
+    public function __construct(
+        protected NotificationService $notificationService
+    ) {</code></pre>
 
 
 
@@ -305,13 +507,18 @@
         
         <li class="col text-nowrap text-md-start">
             
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../../valkey/">
+                    <i class="bi bi-chevron-left"></i>
+                    Valkey
+                </a>
+            
         </li>
 
         
         <li class="col text-nowrap text-md-end pe-0">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="v1/overview/">
-                    Overview
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../send-emails/">
+                    Send Emails
                     <i class="bi bi-chevron-right"></i>
                 </a>
             
@@ -430,7 +637,7 @@
 </footer>
 
         <script>
-            let base_url = '.',
+            let base_url = '../../..',
                 project  = "queue",
                 siteName = 'queue';
 
@@ -463,8 +670,3 @@
 </div>-->
     </body>
 </html>
-
-<!--
-MkDocs version : 1.6.1
-Build Date UTC : 2025-09-02 09:37:10.240979+00:00
--->
