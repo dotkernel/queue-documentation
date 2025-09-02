@@ -63,7 +63,7 @@ DEL keyName1 keyName2
 
 ## Stream Commands
 
-Read entries from a stream oldest to newest (revers '-' and '+' to reverse order):
+Read entries from a stream, sorted from oldest to newest (switch '-' and '+' to reverse order):
 
 ```shell
 XRANGE streamName - +
