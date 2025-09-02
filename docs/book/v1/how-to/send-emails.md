@@ -19,31 +19,35 @@ Importing the Core is essential for the queue to communicate with the main appli
 
 After adding the Core, you need to make sure all external dependencies are included in composer.json. Without them, Core functionalities (cache, mail, authentication, etc.) won’t work in the queue.
 
-```php
-"dotkernel/dot-cache": "^4.3",
-"dotkernel/dot-data-fixtures": "^1.4.0",
-"dotkernel/dot-errorhandler": "4.2.1",
-"dotkernel/dot-mail": "^5.3.0",
-"laminas/laminas-authentication": "2.18.0",
-"mezzio/mezzio-authentication-oauth2": "^2.11",
-"mezzio/mezzio-twigrenderer": "^2.17.0",
-"ramsey/uuid": "^4.5.0",
-"ramsey/uuid-doctrine": "^2.1.0",
-"roave/psr-container-doctrine": "^5.2.2",
+```json
+{
+  "dotkernel/dot-cache": "^4.3",
+  "dotkernel/dot-data-fixtures": "^1.4.0",
+  "dotkernel/dot-errorhandler": "4.2.1",
+  "dotkernel/dot-mail": "^5.3.0",
+  "laminas/laminas-authentication": "2.18.0",
+  "mezzio/mezzio-authentication-oauth2": "^2.11",
+  "mezzio/mezzio-twigrenderer": "^2.17.0",
+  "ramsey/uuid": "^4.5.0",
+  "ramsey/uuid-doctrine": "^2.1.0",
+  "roave/psr-container-doctrine": "^5.2.2"
+}
 ```
 
 Adding Core modules under `autoload` → `psr-4` enables automatic class loading, so you don’t have to manually require each class.
 
-```php
-"autoload": {
+```json
+{
+  "autoload": {
     "psr-4": {
-        "Queue\\": "src/",
-        "Core\\Admin\\": "src/Core/src/Admin/src",
-        "Core\\App\\": "src/Core/src/App/src",
-        "Core\\Security\\": "src/Core/src/Security/src",
-        "Core\\Setting\\": "src/Core/src/Setting/src",
-        "Core\\User\\": "src/Core/src/User/src",
+      "Queue\\": "src/",
+      "Core\\Admin\\": "src/Core/src/Admin/src",
+      "Core\\App\\": "src/Core/src/App/src",
+      "Core\\Security\\": "src/Core/src/Security/src",
+      "Core\\Setting\\": "src/Core/src/Setting/src",
+      "Core\\User\\": "src/Core/src/User/src",
     }
+  }
 }
 ```
 

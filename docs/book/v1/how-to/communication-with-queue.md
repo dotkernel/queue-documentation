@@ -151,9 +151,13 @@ class NotificationService
 
 After you have finished creating the new files, navigate to composer.json and add the new dependencies under the require key:
 
-```php
-"ext-sockets": "*",
-"clue/socket-raw": "^v1.6.0",
+```json
+{
+  "require": {
+    "ext-sockets": "*",
+    "clue/socket-raw": "^1.6.0"
+  }
+}
 ```
 
 Install new dependencies using:
