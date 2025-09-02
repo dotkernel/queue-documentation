@@ -343,7 +343,7 @@
 <p>Communication with the  <a href="https://github.com/dotkernel/queue"><code>Dotkernel Queue</code></a> can be achieved in two different ways: procedural and object-oriented.</p>
 <h2 id="procedural-approach">Procedural approach</h2>
 <p>The main advantage of the procedural code is its simplicity, it directly connects to the queue server, sends the prepared data, and then closes the connection. In this example, the code opens a TCP connection to <code>localhost:8556</code>, checks if the connection is successful, sends data in JSON format, and closes the socket. This makes the logic easy to follow and quick to implement. The disadvantage of this approach is the difficulty of reusing and extending the code. As the complexity of the project increases by repeatedly using this approach, the code becomes more difficult to maintain and not as flexible compared to the object-oriented approach.</p>
-<pre class="highlight"><code class="language-shell">// collect the PAYLOAD that will be sent to Dotkernel Queue 
+<pre class="highlight"><code class="language-php">// collect the PAYLOAD that will be sent to Dotkernel Queue 
 $data = $anyTypeOfData;
 
 // open TCP connection to Dotkernel Queue server
@@ -371,7 +371,7 @@ if (! $client) {
 <p>Create a new directory under the Core directory with the name NotificationSystem or any other name.</p>
 <p>Inside it, create a new <code>ConfigProvider.php</code>, a new <code>NotificationService.php</code> and then copy the code below.</p>
 <p>ConfigProvider code:</p>
-<pre class="highlight"><code class="language-shell">&lt;?php
+<pre class="highlight"><code class="language-php">&lt;?php
 
 declare(strict_types=1);
 
@@ -413,7 +413,7 @@ class ConfigProvider
     }
 }</code></pre>
 <p>Service code:</p>
-<pre class="highlight"><code class="language-shell">&lt;?php
+<pre class="highlight"><code class="language-php">&lt;?php
 
 declare(strict_types=1);
 
@@ -469,12 +469,16 @@ class NotificationService
 }</code></pre>
 <h2 id="step-2-install-new-dependencies">Step 2 Install new dependencies</h2>
 <p>After you have finished creating the new files, navigate to composer.json and add the new dependencies under the require key:</p>
-<pre class="highlight"><code class="language-shell">"ext-sockets": "*",
-"clue/socket-raw": "^v1.6.0",</code></pre>
+<pre class="highlight"><code class="language-json">{
+  "require": {
+    "ext-sockets": "*",
+    "clue/socket-raw": "^1.6.0"
+  }
+}</code></pre>
 <p>Install new dependencies using:</p>
 <pre class="highlight"><code class="language-shell">composer install</code></pre>
 <p>Under the <code>autoload</code> → <code>psr-4</code> key add the newly created module:</p>
-<pre class="highlight"><code class="language-shell">"Core\\NotificationSystem\\": "src/Core/src/NotificationSystem/src"</code></pre>
+<pre class="highlight"><code class="language-php">"Core\\NotificationSystem\\": "src/Core/src/NotificationSystem/src"</code></pre>
 <p>Run <code>composer dump-autoload</code> to regenerate Composer’s autoload files.</p>
 <h2 id="step-3-configuration">Step 3 Configuration</h2>
 <p>Navigate to <code>config/config.php</code> and add your new Core ConfigProvider <code>Core\NotificationSystem\ConfigProvider::class</code>.</p>
@@ -482,7 +486,7 @@ class NotificationService
 <blockquote>
 <p><strong><em>NOTE:</em></strong>  if you only have the local.php.dist file, duplicate it, and delete .dist from the copy's name.</p>
 </blockquote>
-<pre class="highlight"><code class="language-shell">'notification' =&gt; [
+<pre class="highlight"><code class="language-php">'notification' =&gt; [
         'server' =&gt; [
             'protocol' =&gt; 'tcp',
             'host'     =&gt; 'IP of the Dotkernel Queue ',
@@ -492,7 +496,7 @@ class NotificationService
     ],</code></pre>
 <h2 id="step-4-service-usage">Step 4 Service usage</h2>
 <p>Navigate to your handler, inject the new service and use your custom method where needed.</p>
-<pre class="highlight"><code class="language-shell">    #[Inject(
+<pre class="highlight"><code class="language-php">    #[Inject(
         NotificationService::class
     )]
     public function __construct(
