@@ -21,14 +21,14 @@ The long execution times are caused by:
 - Hardware limitations - CPU speed, memory, storage, network bandwidth.
 - External dependencies - waiting on APIs or human input.
 
-# How the Queue Works
+## How the Queue Works
 
 - The queue system has an active **daemon** that listens for TPC connections on a specific port and **stores incoming messages** into Redis.
 This method supports a **large number of requests per second** without overloading.
 - Operations are then **scheduled for execution** when resources are available.
 The order of the execution uses the **FIFO** (First-In, First-Out) method where the oldest request is processed first, followed by newer requests.
 
-# Main Features
+## Main Features
 
 - **Logging** - Ensures maintainability and allows debugging.
 - **Security** - The **firewall** allows requests only from whitelisted IPs for fast response times.
