@@ -9,6 +9,7 @@ nav:
   - Home: index.md
   - v1:
       - Overview: v1/overview.md
+      - "Understanding the Queue": v1/what-is-queue.md
       - Server Setup: v1/server-setup.md
       - Installation: v1/installation.md
       - Control Commands: v1/control-commands.md
