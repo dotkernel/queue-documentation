@@ -18,11 +18,11 @@
         <meta name="docsearch:component" content="queue">
 
         
-        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v1/overview/">
+        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v1/what-is-queue/">
         
         <link rel="shortcut icon" href="https://docs.dotkernel.org/img/dk_docs_favicon_white.svg">
 
-        <title>Overview - queue - Dotkernel Documentation</title>
+        <title>Understanding the Queue - queue - Dotkernel Documentation</title>
 
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap.css">
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap-icons.min.css">
@@ -178,7 +178,7 @@
                         
                     
 
-                    <li class="breadcrumb-item active" aria-current="page">Overview</li>
+                    <li class="breadcrumb-item active" aria-current="page">Understanding the Queue</li>
                 
             
         </ol>
@@ -205,14 +205,14 @@
                 
                     
                         
-<li class="subnavigation__list-item subnavigation__list-item--active">
-    <a href="./" class="subnavigation__link">Overview</a>
+<li class="subnavigation__list-item ">
+    <a href="../overview/" class="subnavigation__link">Overview</a>
 </li>
 
                     
                         
-<li class="subnavigation__list-item ">
-    <a href="../what-is-queue/" class="subnavigation__link">Understanding the Queue</a>
+<li class="subnavigation__list-item subnavigation__list-item--active">
+    <a href="./" class="subnavigation__link">Understanding the Queue</a>
 </li>
 
                     
@@ -297,7 +297,11 @@
             <ul class="toc__list">
             
                 <li class="toc__entry">
-                    <a href="#badges" class="toc__link nav-link">Badges</a>
+                    <a href="#how-the-queue-works" class="toc__link nav-link">How the Queue Works</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#main-features" class="toc__link nav-link">Main Features</a>
                 </li>
             
             </ul>
@@ -316,26 +320,48 @@
     
     
 
-    <h1 id="overview">Overview</h1>
-<blockquote>
-<p><a href="https://github.com/dotkernel/dot-queue">Dotkernel Queue</a> is a component based on <a href="https://github.com/symfony/messenger"><strong>Symfony Messenger</strong></a> that is used to queue asynchronous tasks.
-<a href="https://github.com/netglue/laminas-messenger">netglue/laminas-messenger</a> is a layer that turns Symfony Messenger into a middleware compatible with Mezzio/Laminas applications.</p>
-</blockquote>
-<p>Some everyday <strong>operations are time-consuming and resource-intensive</strong>, so it's best if they run on separate machines, decoupled from the regular request-response cycle.
-<strong>Asynchronous execution</strong> performed by background workers ensures that these operations won't overload the main platform.
-It allows the main platform to return a response and remain responsive for new requests, while tasks with long execution times are scheduled to run later.</p>
-<p><img alt="Queue process" src="https://docs.dotkernel.org/img/queue/schema.png" class="img-responsive"/></p>
-<h2 id="badges">Badges</h2>
-<p><img alt="OSS Lifecycle" src="https://img.shields.io/osslifecycle/dotkernel/queue" />
-<img alt="PHP from Packagist (specify version)" src="https://img.shields.io/packagist/php-v/dotkernel/queue/1.0.0" /></p>
-<p><a href="https://github.com/dotkernel/queue/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/dotkernel/queue" /></a>
-<a href="https://github.com/dotkernel/queue/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/dotkernel/queue" /></a>
-<a href="https://github.com/dotkernel/queue/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/dotkernel/queue" /></a>
-<a href="https://github.com/dotkernel/queue/blob/1.0/LICENSE.md"><img alt="GitHub license" src="https://img.shields.io/github/license/dotkernel/queue" /></a></p>
-<p><a href="https://github.com/mezzio/mezzio-skeleton/actions/workflows/continuous-integration.yml"><img alt="Build Status" src="https://github.com/mezzio/mezzio-skeleton/actions/workflows/continuous-integration.yml/badge.svg" /></a>
-<a href="https://codecov.io/gh/dotkernel/queue"><img alt="codecov" src="https://codecov.io/gh/dotkernel/queue/graph/badge.svg?token=pexSf4wIhc" /></a>
-<a href="https://github.com/dotkernel/queue/actions/workflows/qodana_code_quality.yml"><img alt="Qodana" src="https://github.com/dotkernel/queue/actions/workflows/qodana_code_quality.yml/badge.svg?branch=main" /></a>
-<a href="https://github.com/dotkernel/queue/actions/workflows/static-analysis.yml"><img alt="PHPStan" src="https://github.com/dotkernel/queue/actions/workflows/static-analysis.yml/badge.svg?branch=main" /></a></p>
+    <h1 id="tasks-delegated-to-the-queue">Tasks Delegated to the Queue</h1>
+<p>Normally, the tasks delegated to the queue:</p>
+<ul>
+<li>Take extended periods of time to execute and may be interrupted by PHP limitations (like the PHP <code>max_execution_time</code> parameter).</li>
+<li>Are external which introduces delays from authentication, awaiting responses from potentially multiple interrogations, or may even fail completely because the server is offline.</li>
+<li>Are not part of the PHP response (sending emails, processing videos).</li>
+</ul>
+<p>Here are some example tasks meant for the queue:</p>
+<ul>
+<li><strong>Data Processing</strong> like big data analytics, scientific simulations, or mathematical computations.</li>
+<li><strong>File Handling &amp; Media Processing</strong> like video and image processing, or compression/decompression of large files.</li>
+<li><strong>Networking</strong> like uploading/downloading large files.</li>
+<li><strong>Database Operations</strong> like imports/exports or migrations.</li>
+<li><strong>System &amp; Infrastructure Tasks</strong> like OS updates, software compilation, CI pipelines.</li>
+</ul>
+<p>The long execution times are caused by:</p>
+<ul>
+<li>Data size - gigabytes, terabytes etc.</li>
+<li>Complex algorithms.</li>
+<li>Hardware limitations - CPU speed, memory, storage, network bandwidth.</li>
+<li>External dependencies - waiting on APIs or human input.</li>
+</ul>
+<h2 id="how-the-queue-works">How the Queue Works</h2>
+<ul>
+<li>The queue system has an active <strong>daemon</strong> that listens for TPC connections on a specific port and <strong>stores incoming messages</strong> into Redis.
+This method supports a <strong>large number of requests per second</strong> without overloading.</li>
+<li>Operations are then <strong>scheduled for execution</strong> when resources are available.
+The order of the execution uses the <strong>FIFO</strong> (First-In, First-Out) method where the oldest request is processed first, followed by newer requests.</li>
+</ul>
+<h2 id="main-features">Main Features</h2>
+<ul>
+<li><strong>Logging</strong> - Ensures maintainability and allows debugging.</li>
+<li><strong>Security</strong> - The <strong>firewall</strong> allows requests only from whitelisted IPs for fast response times.</li>
+<li><strong>Retry Mechanism</strong> - Retries failing tasks a certain number of times before removing a task from the queue.</li>
+<li><strong>Reporting</strong> - The logs enable developers to investigate various metrics via console commands like:<ul>
+<li>Queue length - How many jobs are in the to-do list.</li>
+<li>Processing time per job.</li>
+<li>Error rates - How many messages failed.</li>
+<li>Throughput - Jobs/sec processed.</li>
+</ul>
+</li>
+</ul>
 
 
 
@@ -345,9 +371,9 @@ It allows the main platform to return a response and remain responsive for new r
         
         <li class="col text-nowrap text-md-start">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../..">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../overview/">
                     <i class="bi bi-chevron-left"></i>
-                    Home
+                    Overview
                 </a>
             
         </li>
@@ -355,8 +381,8 @@ It allows the main platform to return a response and remain responsive for new r
         
         <li class="col text-nowrap text-md-end pe-0">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../what-is-queue/">
-                    Understanding the Queue
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../server-setup/">
+                    Server Setup
                     <i class="bi bi-chevron-right"></i>
                 </a>
             
