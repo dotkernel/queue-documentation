@@ -1,7 +1,7 @@
 # Overview
 
 > [Dotkernel Queue](https://github.com/dotkernel/dot-queue) is a component based on [**Symfony Messenger**](https://github.com/symfony/messenger) that is used to queue asynchronous tasks.
-[netglue/laminas-messenger](https://github.com/netglue/laminas-messenger) is a layer that turns Symfony Messenger into a middleware compatible with Mezzio/Laminas applications.
+[netglue/laminas-messenger](https://github.com/netglue/laminas-messenger) is an adapter that integrates Symfony Messenger with the [Laminas Service Manager](https://docs.laminas.dev/laminas-servicemanager/) container for Mezzio/Laminas applications.
 
 Some everyday **operations are time-consuming and resource-intensive**, so it's best if they run on separate machines, decoupled from the regular request-response cycle.
 **Asynchronous execution** performed by background workers ensures that these operations won't overload the main platform.
