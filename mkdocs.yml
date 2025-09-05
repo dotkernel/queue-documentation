@@ -12,6 +12,7 @@ nav:
       - "Understanding the Queue": v1/what-is-queue.md
       - Server Setup: v1/server-setup.md
       - Installation: v1/installation.md
+      - Messenger Configuration: v1/messenger-configuration.md
       - Control Commands: v1/control-commands.md
       - Valkey: v1/valkey.md
       - How to:

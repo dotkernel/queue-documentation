@@ -4,7 +4,7 @@ The commands available are:
 
 1. `GetFailedMessagesCommand.php (failed)` - returns logs with messages that failed to process (levelName:error)
 2. `GetProcessedMessagesCommand.php (processed)` - returns logs with messages that were successfully processed (levelName:info)
-3. `GetQueuedMessagesCommand (inventory)` - returns all queued messages from Redis stream 'messages'
+3. `GetQueuedMessagesCommand (inventory)` - returns all queued messages from Redis streams, in this case `messages` or `failed`
 
 The commands can be run in two different ways:
 
@@ -21,7 +21,7 @@ php bin/cli.php processed --start="yyyy-mm-dd" --end="yyyy-mm-dd" --limit=int
 ```
 
 ```shell
-php bin/cli.php inventory
+php bin/cli.php inventory --stream="messages or failed"
 ```
 
 ## TCP message
@@ -47,5 +47,6 @@ echo "control" | socat -t1 - TCP:host:port
 > Using `-t1` flag is not necessary but can be useful, it is used to set a timeout of n seconds for both reading and writing; after n second of inactivity, socat will terminate the connection. If the timeout is not set and the server does not respond or keep the connection open, the socat process could freeze indefinitely.
 
 ```shell
-echo "inventory" | socat -t1 - TCP:host:port
+echo "inventory stream=messages or failed" | socat -t1 - TCP:host:port
 ```
+> **Note:** `stream` flag is mandatory and must be filled in.
