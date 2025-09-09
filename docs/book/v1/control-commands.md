@@ -49,5 +49,3 @@ echo "control" | socat -t1 - TCP:host:port
 ```shell
 echo "inventory" | socat -t1 - TCP:host:port
 ```
-
-> **Note:** `stream` flag is mandatory and must be filled in.
