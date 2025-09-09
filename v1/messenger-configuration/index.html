@@ -18,11 +18,11 @@
         <meta name="docsearch:component" content="queue">
 
         
-        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v1/how-to/send-emails/">
+        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v1/messenger-configuration/">
         
         <link rel="shortcut icon" href="https://docs.dotkernel.org/img/dk_docs_favicon_white.svg">
 
-        <title>Send Emails - queue - Dotkernel Documentation</title>
+        <title>Messenger Configuration - queue - Dotkernel Documentation</title>
 
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap.css">
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap-icons.min.css">
@@ -169,7 +169,7 @@
                 
 
                 
-                    <li class="breadcrumb-item"><a href="../../..">queue</a></li>
+                    <li class="breadcrumb-item"><a href="../..">queue</a></li>
 
                     
                         
@@ -177,15 +177,8 @@
                             
                         
                     
-                        
-                            
-                            
-                                <li class="breadcrumb-item">How to</li>
-                            
-                        
-                    
 
-                    <li class="breadcrumb-item active" aria-current="page">Send Emails</li>
+                    <li class="breadcrumb-item active" aria-current="page">Messenger Configuration</li>
                 
             
         </ol>
@@ -200,7 +193,7 @@
                     
     <div class="subnavigation hidden-print">
 <!--        <h4 class="subnavigation__title">-->
-<!--            <a href="../../..">queue</a>-->
+<!--            <a href="../..">queue</a>-->
 <!--        </h4>-->
 
         <h5 class="subnavigation__title">Table of Contents</h5>
@@ -213,43 +206,43 @@
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="../../overview/" class="subnavigation__link">Overview</a>
+    <a href="../overview/" class="subnavigation__link">Overview</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="../../what-is-queue/" class="subnavigation__link">Understanding the Queue</a>
+    <a href="../what-is-queue/" class="subnavigation__link">Understanding the Queue</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="../../server-setup/" class="subnavigation__link">Server Setup</a>
+    <a href="../server-setup/" class="subnavigation__link">Server Setup</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="../../installation/" class="subnavigation__link">Installation</a>
+    <a href="../installation/" class="subnavigation__link">Installation</a>
+</li>
+
+                    
+                        
+<li class="subnavigation__list-item subnavigation__list-item--active">
+    <a href="./" class="subnavigation__link">Messenger Configuration</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="../../messenger-configuration/" class="subnavigation__link">Messenger Configuration</a>
+    <a href="../control-commands/" class="subnavigation__link">Control Commands</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="../../control-commands/" class="subnavigation__link">Control Commands</a>
-</li>
-
-                    
-                        
-<li class="subnavigation__list-item ">
-    <a href="../../valkey/" class="subnavigation__link">Valkey</a>
+    <a href="../valkey/" class="subnavigation__link">Valkey</a>
 </li>
 
                     
@@ -277,13 +270,13 @@
         
         
 <li class="subnavigation__list-item ">
-    <a href="../communication-with-queue/" class="subnavigation__link">Communication With Queue</a>
+    <a href="../how-to/communication-with-queue/" class="subnavigation__link">Communication With Queue</a>
 </li>
 
         
         
-<li class="subnavigation__list-item subnavigation__list-item--active">
-    <a href="./" class="subnavigation__link">Send Emails</a>
+<li class="subnavigation__list-item ">
+    <a href="../how-to/send-emails/" class="subnavigation__link">Send Emails</a>
 </li>
 
         
@@ -310,31 +303,11 @@
             <ul class="toc__list">
             
                 <li class="toc__entry">
-                    <a href="#step-1-importing-core" class="toc__link nav-link">Step 1 Importing Core</a>
+                    <a href="#main-queue-stream-messages" class="toc__link nav-link">Main queue stream (messages)</a>
                 </li>
             
                 <li class="toc__entry">
-                    <a href="#step-2-core-dependency" class="toc__link nav-link">Step 2 Core dependency</a>
-                </li>
-            
-                <li class="toc__entry">
-                    <a href="#step-3-install-new-dependencies" class="toc__link nav-link">Step 3 Install new dependencies</a>
-                </li>
-            
-                <li class="toc__entry">
-                    <a href="#step-4-configuration" class="toc__link nav-link">Step 4 Configuration</a>
-                </li>
-            
-                <li class="toc__entry">
-                    <a href="#step-5-database-connection" class="toc__link nav-link">Step 5 Database connection</a>
-                </li>
-            
-                <li class="toc__entry">
-                    <a href="#step-6-email-configuration" class="toc__link nav-link">Step 6 Email configuration</a>
-                </li>
-            
-                <li class="toc__entry">
-                    <a href="#step-7-data-management-and-emails-sending" class="toc__link nav-link">Step 7 Data management and emails sending</a>
+                    <a href="#dead-letter-queue-dlq" class="toc__link nav-link">Dead Letter Queue (DLQ)</a>
                 </li>
             
             </ul>
@@ -352,88 +325,53 @@
 
     
     
-<!--        <h2 class="chapter__headline text-black-50">How to</h2>-->
-    
 
-    <h1 id="send-emails">SEND EMAILS</h1>
-<p>Using a queuing service solves problems such as server overload. For example, if a server receives a large number of requests, it tries to process them synchronously, resulting in long response times or even server crashes.</p>
-<p>A concrete example is sending emails. While a series of tasks are running on the server, a task such as sending an email is passed to a queue and run in the background so the server can move on to the next task, while the queue composes the email and sends it. Tasks are queued and processed gradually (FIFO), depending on available resources.</p>
-<p>To implement such a service, the <a href="https://github.com/dotkernel/queue/tree/send-email"><code>send-email</code></a> branch can be taken as a model.</p>
-<blockquote>
-<p><strong><em>NOTE:</em></strong>  The default branch 1.0 holds only the base code of Queue and provides essential features such as:</p>
-<ul>
-<li>Adding messages to the queue</li>
-<li>Retrieving and processing messages (FIFO)</li>
-</ul>
-</blockquote>
-<h2 id="step-1-importing-core">Step 1 Importing Core</h2>
-<p>Importing the Core is essential for the queue to communicate with the main application logic (for this case <a href="https://github.com/dotkernel/admin"><code>dotkernel admin</code></a>). Whether you copy the Core folder directly or add it as a submodule, it’s important to keep the Core in sync between the main project and the queue so that all classes, services, and configurations are available for message processing.</p>
-<h2 id="step-2-core-dependency">Step 2 Core dependency</h2>
-<p>After adding the Core, you need to make sure all external dependencies are included in composer.json. Without them, Core functionalities (cache, mail, authentication, etc.) won’t work in the queue.</p>
-<pre class="highlight"><code class="language-json">{
-  "dotkernel/dot-cache": "^4.3",
-  "dotkernel/dot-data-fixtures": "^1.4.0",
-  "dotkernel/dot-errorhandler": "4.2.1",
-  "dotkernel/dot-mail": "^5.3.0",
-  "laminas/laminas-authentication": "2.18.0",
-  "mezzio/mezzio-authentication-oauth2": "^2.11",
-  "mezzio/mezzio-twigrenderer": "^2.17.0",
-  "ramsey/uuid": "^4.5.0",
-  "ramsey/uuid-doctrine": "^2.1.0",
-  "roave/psr-container-doctrine": "^5.2.2"
-}</code></pre>
-<p>Adding Core modules under <code>autoload</code> → <code>psr-4</code> enables automatic class loading, so you don’t have to manually require each class.</p>
-<pre class="highlight"><code class="language-json">{
-  "autoload": {
-    "psr-4": {
-      "Queue\\": "src/",
-      "Core\\Admin\\": "src/Core/src/Admin/src",
-      "Core\\App\\": "src/Core/src/App/src",
-      "Core\\Security\\": "src/Core/src/Security/src",
-      "Core\\Setting\\": "src/Core/src/Setting/src",
-      "Core\\User\\": "src/Core/src/User/src",
-    }
-  }
-}</code></pre>
-<h2 id="step-3-install-new-dependencies">Step 3 Install new dependencies</h2>
-<p>Install all new dependencies using:</p>
-<pre class="highlight"><code class="language-shell">composer install</code></pre>
-<p>Running <code>composer install</code> ensures that all packages required for Core and the queue are downloaded. This includes third-party libraries and all project-specific dependencies.</p>
-<h2 id="step-4-configuration">Step 4 Configuration</h2>
-<p>Navigate to <code>config/config.php</code> and add <code>ConfigProvider::class</code> file from all packages you installed.</p>
-<pre class="highlight"><code class="language-php">Mezzio\Twig\ConfigProvider::class,
-Dot\Cache\ConfigProvider::class,
-Dot\DataFixtures\ConfigProvider::class,
-Dot\Mail\ConfigProvider::class,
-
-// Core
-Core\Admin\ConfigProvider::class,
-Core\App\ConfigProvider::class,
-Core\Security\ConfigProvider::class,
-Core\Setting\ConfigProvider::class,
-Core\User\ConfigProvider::class,</code></pre>
-<h2 id="step-5-database-connection">Step 5 Database connection</h2>
-<p>Navigate to <code>config/autoload/local.php</code> and fill in the database connection details.</p>
-<blockquote>
-<p><strong><em>NOTE:</em></strong>  if you only have the local.php.dist file, duplicate it, and delete .dist from the copy's name.</p>
-</blockquote>
-<pre class="highlight"><code class="language-php">$databases = [
-    'default' =&gt; [
-        'host'     =&gt; '',
-        'dbname'   =&gt; '',
-        'user'     =&gt; '',
-        'password' =&gt; '',
-        'port'     =&gt; 3306,
-        'driver'   =&gt; 'pdo_mysql',
-        'charset'  =&gt; 'utf8mb4',
-        'collate'  =&gt; 'utf8mb4_general_ci',
+    <h1 id="messenger-configuration">Messenger Configuration</h1>
+<pre class="highlight"><code class="language-php">return [
+    'symfony'      =&gt; [
+        'messenger' =&gt; [
+            'transports'        =&gt; [
+                'redis_transport' =&gt; [
+                    // specifies the Redis server and stream/key
+                    // messages is the main stream where new messages are initially stored
+                    'dsn'            =&gt; 'redis://127.0.0.1:6379/messages',
+                    // defines which serializer to use to encode/decode messages
+                    'serializer'     =&gt; SymfonySerializer::class,
+                    'retry_strategy' =&gt; [
+                        // maximum number of retry attempts before moving a message to the failure transport
+                        'max_retries' =&gt; 3,
+                        // initial delay before retrying a failed message, in milliseconds
+                        'delay'       =&gt; 1000,
+                        // each retry’s delay is multiplied by this factor
+                        'multiplier'  =&gt; 2,
+                        // maximum delay allowed between retries, 0 means unlimited or default behavior
+                        'max_delay'   =&gt; 0,
+                    ],
+                ],
+                // defines a transport named failed, used to store messages that cannot be delivered after retries.
+                'failed'          =&gt; [
+                    // specifies the Redis server and stream/key
+                    'dsn'        =&gt; 'redis://127.0.0.1:6379/failed',
+                    // defines which serializer to use to encode/decode messages
+                    'serializer' =&gt; SymfonySerializer::class,
+                ],
+            ],
+            // tells Symfony Messenger to send messages that exceed retry limits to the failed transport
+            'failure_transport' =&gt; 'failed',
+        ],
+    ],
+    'dependencies' =&gt; [
+        'factories'&gt; [
+            'redis_transport'        =&gt; [TransportFactory::class, 'redis_transport'],
+            'failed'                 =&gt; [TransportFactory::class, 'failed'],
+            SymfonySerializer::class =&gt; fn(ContainerInterface $container) =&gt; new PhpSerializer(),
+        ],
     ],
 ];</code></pre>
-<h2 id="step-6-email-configuration">Step 6 Email configuration</h2>
-<p>Inside your <code>config/autoload</code> folder create a new file named <code>mail.global.php</code>, copy this <a href="https://github.com/dotkernel/queue/blob/send-email/config/autoload/mail.global.php">file</a> content and fill in your configuration. The queue will use these settings to send emails in the background.</p>
-<h2 id="step-7-data-management-and-emails-sending">Step 7 Data management and emails sending</h2>
-<p>Once everything is installed and configured we can move on to handle the data in the queue. In the message handler for example <code>MessageHandler</code>, each message from the queue is processed, the email is composed, and then sent. By injecting the required services and using templates, the handler can send emails without blocking the main application, respecting FIFO and asynchronous processing.</p>
-<p>In this <a href="https://github.com/dotkernel/queue/blob/send-email/src/App/Message/MessageHandler.php">file</a> you can follow a simple example of how to create and send an email using data received from the queue inside the handler.</p>
+<h2 id="main-queue-stream-messages">Main queue stream (<code>messages</code>)</h2>
+<p><code>messages</code> stream is the main queue where all new messages are initially stored. The Messenger worker consume messages from this stream and attempt to process them according to the application logic.</p>
+<h2 id="dead-letter-queue-dlq">Dead Letter Queue (DLQ)</h2>
+<p>DLQ is a dedicated transport where messages are sent when they fail to be processed after a configured number of retries. Each transport can define a retry_strategy specifying the maximum number of retry attempts, delays between retries, and exponential backoff rules. When a message exceeds the allowed retries, it is automatically forwarded to the failure transport and stored in <code>failed</code> stream, ensuring that failed messages do not block the queue.</p>
 
 
 
@@ -443,15 +381,20 @@ Core\User\ConfigProvider::class,</code></pre>
         
         <li class="col text-nowrap text-md-start">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../communication-with-queue/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../installation/">
                     <i class="bi bi-chevron-left"></i>
-                    Communication With Queue
+                    Installation
                 </a>
             
         </li>
 
         
         <li class="col text-nowrap text-md-end pe-0">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../control-commands/">
+                    Control Commands
+                    <i class="bi bi-chevron-right"></i>
+                </a>
             
         </li>
     </ul>
@@ -568,7 +511,7 @@ Core\User\ConfigProvider::class,</code></pre>
 </footer>
 
         <script>
-            let base_url = '../../..',
+            let base_url = '../..',
                 project  = "queue",
                 siteName = 'queue';
 
