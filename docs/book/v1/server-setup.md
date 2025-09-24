@@ -1,12 +1,12 @@
 # Server setup
 
-> The below instructions are working only on **AlmaLinux 9**.
+> The below instructions are working only on **AlmaLinux 9** or **10**.
 >
 > For other operating systems, they need to be adapted accordingly.
 
 ## Starting point
 
-A server with **AlmaLinux 9** freshly installed, up to date and with root access.
+A server with **AlmaLinux 9** or **10** freshly installed, up to date and with root access.
 
 ### Update OS
 
@@ -115,7 +115,7 @@ sudo dnf install git
 ### Composer
 
 ```shell
-wget https://getcomposer.org/installer -O composer-installer.php
+sudo wget https://getcomposer.org/installer -O composer-installer.php
 ```
 
 ```shell
@@ -123,7 +123,7 @@ sudo chmod 777 /usr/local/bin
 ```
 
 ```shell
-php composer-installer.php --filename=composer --install-dir=/usr/local/bin
+sudo php composer-installer.php --filename=composer --install-dir=/usr/local/bin
 ```
 
 ### Firewall setup
