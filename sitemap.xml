@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.dotkernel.org/queue-documentation/</loc>
-         <lastmod>2025-09-10</lastmod>
+         <lastmod>2025-09-25</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/queue-documentation/v1/control-commands/</loc>
-         <lastmod>2025-09-10</lastmod>
+         <lastmod>2025-09-25</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/queue-documentation/v1/installation/</loc>
-         <lastmod>2025-09-10</lastmod>
+         <lastmod>2025-09-25</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/queue-documentation/v1/messenger-configuration/</loc>
-         <lastmod>2025-09-10</lastmod>
+         <lastmod>2025-09-25</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/queue-documentation/v1/overview/</loc>
-         <lastmod>2025-09-10</lastmod>
+         <lastmod>2025-09-25</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/queue-documentation/v1/server-setup/</loc>
-         <lastmod>2025-09-10</lastmod>
+         <lastmod>2025-09-25</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/queue-documentation/v1/valkey/</loc>
-         <lastmod>2025-09-10</lastmod>
+         <lastmod>2025-09-25</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/queue-documentation/v1/what-is-queue/</loc>
-         <lastmod>2025-09-10</lastmod>
+         <lastmod>2025-09-25</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/queue-documentation/v1/how-to/communication-with-queue/</loc>
-         <lastmod>2025-09-10</lastmod>
+         <lastmod>2025-09-25</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/queue-documentation/v1/how-to/send-emails/</loc>
-         <lastmod>2025-09-10</lastmod>
+         <lastmod>2025-09-25</lastmod>
     </url>
 </urlset>
