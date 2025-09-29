@@ -1,10 +1,10 @@
 # Server setup
 
-> The below instructions are working only on **AlmaLinux 9** or **10**.
->
-> For other operating systems, they need to be adapted accordingly.
->
-> We recommend to use for development [Hetzner Cloud: € 20 Credit](https://hetzner.cloud/?ref=HYu6z4XGfkcP)
+The below instructions were tested only on **AlmaLinux 9** or **10**.
+
+*For other operating systems, they need to be adapted accordingly.*
+
+> We recommend the use of [Hetzner Cloud via our referral link](https://hetzner.cloud/?ref=HYu6z4XGfkcP) for development thanks to the initial € 20 free [Hetzner Cloud credit](https://www.hetzner.com/legal/referrals).
 
 ## Starting point
 
