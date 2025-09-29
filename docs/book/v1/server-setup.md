@@ -4,7 +4,7 @@
 >
 > For other operating systems, they need to be adapted accordingly.
 >
-> We recommend to use for development [Hetzner Cloud: € 20 Credit](https://hetzner.cloud/?ref=HYu6z4XGfkcP)
+> We recommend the use of [Hetzner Cloud via our referral link](https://hetzner.cloud/?ref=HYu6z4XGfkcP) for development thanks to the [€20 free Hetzner Cloud credit](https://www.hetzner.com/legal/referrals) for new users.
 
 ## Starting point
 
