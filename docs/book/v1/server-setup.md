@@ -1,31 +1,33 @@
 # Server setup
 
 > The below instructions are working only on **AlmaLinux 9** or **10**.
->
+> 
 > For other operating systems, they need to be adapted accordingly.
+> 
+> We recommend to use for development  [Hetzner Cloud](https://hetzner.cloud/?ref=HYu6z4XGfkcP) 
 
 ## Starting point
 
-A server with **AlmaLinux 9** or **10** freshly installed, up to date and with root access.
+A server with **AlmaLinux 9** or **10** freshly installed with `root` access.
 
 ### Update OS
 
 ```shell
-sudo dnf update -y
+dnf update -y
 ```
 
 ### Create a new user with sudo permissions
 
 ```shell
-sudo useradd dotkernel
+useradd dotkernel
 ```
 
 ```shell
-sudo passwd dotkernel
+passwd dotkernel
 ```
 
 ```shell
-sudo usermod -aG wheel dotkernel
+usermod -aG wheel dotkernel
 ```
 
 > Reboot server.
@@ -45,7 +47,7 @@ sudo dnf install zip unzip socat wget
 ### PHP
 
 ```shell
-sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-9.rpm
+sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-$(rpm -E %almalinux).rpm
 ```
 
 ```shell

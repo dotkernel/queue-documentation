@@ -25,14 +25,14 @@ composer install --no-dev
 - copy them in /etc/systemd/system/
 
 ```shell
-sudo cp /home/dotkernel/queue/daemon\swoole.service
+sudo cp /home/dotkernel/queue/daemon/swoole.service /etc/systemd/system/swoole.service
 ```
 
 ```shell
-sudo cp /home/dotkernel/queue/daemon\messenger.service
+sudo cp /home/dotkernel/queue/daemon/messenger.service  /etc/systemd/system/messenger.service
 ```
 
-## Start the daemon
+## Start the Swoole daemon
 
 ```shell
 sudo systemctl daemon-reload
@@ -48,6 +48,24 @@ sudo systemctl start swoole.service
 
 ```shell
 sudo systemctl status  swoole.service
+```
+
+## Start the Messenger daemon
+
+```shell
+sudo systemctl daemon-reload
+```
+
+```shell
+sudo systemctl enable messenger.service
+```
+
+```shell
+sudo systemctl start messenger.service
+```
+
+```shell
+sudo systemctl status  messenger.service
 ```
 
 ### Testing the installation
