@@ -311,7 +311,11 @@
                 </li>
             
                 <li class="toc__entry">
-                    <a href="#start-the-daemon" class="toc__link nav-link">Start the daemon</a>
+                    <a href="#start-the-swoole-daemon" class="toc__link nav-link">Start the Swoole daemon</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#start-the-messenger-daemon" class="toc__link nav-link">Start the Messenger daemon</a>
                 </li>
             
             </ul>
@@ -347,13 +351,18 @@
 <li>Edit the files from <code>/daemon</code> folder and set proper paths</li>
 <li>copy them in /etc/systemd/system/</li>
 </ul>
-<pre class="highlight"><code class="language-shell">sudo cp /home/dotkernel/queue/daemon\swoole.service</code></pre>
-<pre class="highlight"><code class="language-shell">sudo cp /home/dotkernel/queue/daemon\messenger.service</code></pre>
-<h2 id="start-the-daemon">Start the daemon</h2>
+<pre class="highlight"><code class="language-shell">sudo cp /home/dotkernel/queue/daemon/swoole.service /etc/systemd/system/swoole.service</code></pre>
+<pre class="highlight"><code class="language-shell">sudo cp /home/dotkernel/queue/daemon/messenger.service  /etc/systemd/system/messenger.service</code></pre>
+<h2 id="start-the-swoole-daemon">Start the Swoole daemon</h2>
 <pre class="highlight"><code class="language-shell">sudo systemctl daemon-reload</code></pre>
 <pre class="highlight"><code class="language-shell">sudo systemctl enable swoole.service</code></pre>
 <pre class="highlight"><code class="language-shell">sudo systemctl start swoole.service</code></pre>
 <pre class="highlight"><code class="language-shell">sudo systemctl status  swoole.service</code></pre>
+<h2 id="start-the-messenger-daemon">Start the Messenger daemon</h2>
+<pre class="highlight"><code class="language-shell">sudo systemctl daemon-reload</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl enable messenger.service</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl start messenger.service</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl status  messenger.service</code></pre>
 <h3 id="testing-the-installation">Testing the installation</h3>
 <p>Send a request from your local machine</p>
 <pre class="highlight"><code class="language-shell">echo "Hello" | socat -T1 - TCP:SERVER-IP:8556`</code></pre>

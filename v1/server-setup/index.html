@@ -318,15 +318,16 @@
 <blockquote>
 <p>The below instructions are working only on <strong>AlmaLinux 9</strong> or <strong>10</strong>.</p>
 <p>For other operating systems, they need to be adapted accordingly.</p>
+<p>We recommend to use for development  <a href="https://hetzner.cloud/?ref=HYu6z4XGfkcP">Hetzner Cloud</a> </p>
 </blockquote>
 <h2 id="starting-point">Starting point</h2>
-<p>A server with <strong>AlmaLinux 9</strong> or <strong>10</strong> freshly installed, up to date and with root access.</p>
+<p>A server with <strong>AlmaLinux 9</strong> or <strong>10</strong> freshly installed with <code>root</code> access.</p>
 <h3 id="update-os">Update OS</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf update -y</code></pre>
+<pre class="highlight"><code class="language-shell">dnf update -y</code></pre>
 <h3 id="create-a-new-user-with-sudo-permissions">Create a new user with sudo permissions</h3>
-<pre class="highlight"><code class="language-shell">sudo useradd dotkernel</code></pre>
-<pre class="highlight"><code class="language-shell">sudo passwd dotkernel</code></pre>
-<pre class="highlight"><code class="language-shell">sudo usermod -aG wheel dotkernel</code></pre>
+<pre class="highlight"><code class="language-shell">useradd dotkernel</code></pre>
+<pre class="highlight"><code class="language-shell">passwd dotkernel</code></pre>
+<pre class="highlight"><code class="language-shell">usermod -aG wheel dotkernel</code></pre>
 <blockquote>
 <p>Reboot server.</p>
 <p>SSH into the server as <code>dotkernel</code>.</p>
@@ -335,7 +336,7 @@
 <pre class="highlight"><code class="language-shell">sudo dnf install -y dnf-utils</code></pre>
 <pre class="highlight"><code class="language-shell">sudo dnf install zip unzip socat wget</code></pre>
 <h3 id="php">PHP</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-9.rpm</code></pre>
+<pre class="highlight"><code class="language-shell">sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-$(rpm -E %almalinux).rpm</code></pre>
 <pre class="highlight"><code class="language-shell">sudo dnf module enable php:remi-8.4</code></pre>
 <pre class="highlight"><code class="language-shell">sudo dnf install -y php php-cli php-common php-intl</code></pre>
 <h3 id="start-php-fpm">Start PHP-FPM</h3>
