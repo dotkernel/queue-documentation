@@ -295,6 +295,10 @@
             <ul class="toc__list">
             
                 <li class="toc__entry">
+                    <a href="#location" class="toc__link nav-link">Location</a>
+                </li>
+            
+                <li class="toc__entry">
                     <a href="#git-clone" class="toc__link nav-link">git clone</a>
                 </li>
             
@@ -335,8 +339,18 @@
     
 
     <h1 id="installation">INSTALLATION</h1>
+<h2 id="location">Location</h2>
+<ul>
+<li>Because you are logged in now with the non-root user <code>dotkernel</code>, your current server path must be <code>/home/dotkernel</code></li>
+</ul>
+<blockquote>
+<p>Please be sure you are using the non-root user for the below installation</p>
+</blockquote>
 <h2 id="git-clone">git clone</h2>
 <pre class="highlight"><code class="language-shell">git clone -b default-queue https://github.com/dotkernel/queue.git</code></pre>
+<blockquote>
+<p>The installation path should be now <code>/home/dotkernel/queue</code></p>
+</blockquote>
 <h2 id="prepare-configautoload-files">Prepare <code>config/autoload</code> files</h2>
 <ul>
 <li>duplicate <code>local.php.dist</code> as <code>local.php</code>, then fill in the database credentials and set the <code>$baseUrl</code></li>
