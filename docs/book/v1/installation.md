@@ -1,10 +1,18 @@
 # INSTALLATION
 
+## Location
+
+- Because you are logged in now with the non-root user `dotkernel`, your current server path must be `/home/dotkernel`
+
+> Please be sure you are using the non-root user for the below installation
+
 ## git clone
 
 ```shell
 git clone -b default-queue https://github.com/dotkernel/queue.git
 ```
+
+> The installation path should be now `/home/dotkernel/queue`
 
 ## Prepare `config/autoload` files
 
