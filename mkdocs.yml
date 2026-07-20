@@ -30,7 +30,6 @@ nav:
       - How to:
           - Communication With Queue: v1/how-to/communication-with-queue.md
           - Send Emails: v1/how-to/send-emails.md
-
 site_name: queue
 site_description: "Dotkernel Queue"
 repo_url: "https://github.com/dotkernel/queue"
