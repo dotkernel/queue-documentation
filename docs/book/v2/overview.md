@@ -12,14 +12,14 @@ It allows the main platform to return a response and remain responsive for new r
 ## Badges
 
 ![OSS Lifecycle](https://img.shields.io/osslifecycle/dotkernel/queue)
-![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/queue/1.0.0)
+![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/queue/2.0.0)
 
 [![GitHub issues](https://img.shields.io/github/issues/dotkernel/queue)](https://github.com/dotkernel/queue/issues)
 [![GitHub forks](https://img.shields.io/github/forks/dotkernel/queue)](https://github.com/dotkernel/queue/network)
 [![GitHub stars](https://img.shields.io/github/stars/dotkernel/queue)](https://github.com/dotkernel/queue/stargazers)
-[![GitHub license](https://img.shields.io/github/license/dotkernel/queue)](https://github.com/dotkernel/queue/blob/1.0/LICENSE.md)
+[![GitHub license](https://img.shields.io/github/license/dotkernel/queue)](https://github.com/dotkernel/queue/blob/2.0/LICENSE.md)
 
-[![Build Status](https://github.com/dotkernel/queue/actions/workflows/continuous-integration.yml/badge.svg?branch=1.0)](https://github.com/dotkernel/queue/actions/workflows/continuous-integration.yml)
-[![codecov](https://codecov.io/gh/dotkernel/queue/branch/1.0/graph/badge.svg?token=pexSf4wIhc)](https://codecov.io/gh/dotkernel/queue)
-[![Qodana](https://github.com/dotkernel/queue/actions/workflows/qodana_code_quality.yml/badge.svg?branch=1.0)](https://github.com/dotkernel/queue/actions/workflows/qodana_code_quality.yml)
-[![PHPStan](https://github.com/dotkernel/queue/actions/workflows/static-analysis.yml/badge.svg?branch=1.0)](https://github.com/dotkernel/queue/actions/workflows/static-analysis.yml)
+[![Build Status](https://github.com/dotkernel/queue/actions/workflows/continuous-integration.yml/badge.svg?branch=2.0)](https://github.com/dotkernel/queue/actions/workflows/continuous-integration.yml)
+[![codecov](https://codecov.io/gh/dotkernel/queue/branch/2.0/graph/badge.svg?token=pexSf4wIhc)](https://codecov.io/gh/dotkernel/queue)
+[![Qodana](https://github.com/dotkernel/queue/actions/workflows/qodana_code_quality.yml/badge.svg?branch=2.0)](https://github.com/dotkernel/queue/actions/workflows/qodana_code_quality.yml)
+[![PHPStan](https://github.com/dotkernel/queue/actions/workflows/static-analysis.yml/badge.svg?branch=2.0)](https://github.com/dotkernel/queue/actions/workflows/static-analysis.yml)

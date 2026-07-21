@@ -2,11 +2,23 @@ docs_dir: docs/book
 site_dir: docs/html
 extra:
   project: Queue
-  current_version: v1
+  current_version: v2
   versions:
+    - v2
     - v1
 nav:
   - Home: index.md
+  - v2:
+      - Overview: v2/overview.md
+      - "Understanding the Queue": v2/what-is-queue.md
+      - Server Setup: v2/server-setup.md
+      - Installation: v2/installation.md
+      - Messenger Configuration: v2/messenger-configuration.md
+      - Control Commands: v2/control-commands.md
+      - Valkey: v2/valkey.md
+      - How to:
+          - Communication With Queue: v2/how-to/communication-with-queue.md
+          - Send Emails: v2/how-to/send-emails.md
   - v1:
       - Overview: v1/overview.md
       - "Understanding the Queue": v1/what-is-queue.md
