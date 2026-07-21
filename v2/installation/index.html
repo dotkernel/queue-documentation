@@ -18,11 +18,11 @@
         <meta name="docsearch:component" content="queue">
 
         
-        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v1/server-setup/">
+        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v2/installation/">
         
         <link rel="shortcut icon" href="https://docs.dotkernel.org/img/dk_docs_favicon_white.svg">
 
-        <title>Server Setup - queue - Dotkernel Documentation</title>
+        <title>Installation - queue - Dotkernel Documentation</title>
 
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap.css">
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap-icons.min.css">
@@ -149,13 +149,13 @@
         <div class="btn-group">
             <button type="button" class="btn dropdown-toggle bg-light" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
                 
-                    v1
+                    v2
                 
             </button>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
                 
                 
-                <a href="../../v2/overview/" class="dropdown-item">
+                <a href="../overview/" class="dropdown-item active">
                     
                         v2 (latest)
                     
@@ -163,7 +163,7 @@
                 
                 
                 
-                <a href="../overview/" class="dropdown-item active">
+                <a href="../../v1/overview/" class="dropdown-item">
                     
                         v1
                     
@@ -199,7 +199,7 @@
                         
                     
 
-                    <li class="breadcrumb-item active" aria-current="page">Server Setup</li>
+                    <li class="breadcrumb-item active" aria-current="page">Installation</li>
                 
             
         </ol>
@@ -224,14 +224,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
 <li class="subnavigation__list-item ">
@@ -246,14 +238,14 @@
 
                     
                         
-<li class="subnavigation__list-item subnavigation__list-item--active">
-    <a href="./" class="subnavigation__link">Server Setup</a>
+<li class="subnavigation__list-item ">
+    <a href="../server-setup/" class="subnavigation__link">Server Setup</a>
 </li>
 
                     
                         
-<li class="subnavigation__list-item ">
-    <a href="../installation/" class="subnavigation__link">Installation</a>
+<li class="subnavigation__list-item subnavigation__list-item--active">
+    <a href="./" class="subnavigation__link">Installation</a>
 </li>
 
                     
@@ -315,6 +307,14 @@
                     
                 
             
+
+                
+                
+
+                    
+                    
+                
+            
         </ul>
     </div>
 
@@ -332,7 +332,31 @@
             <ul class="toc__list">
             
                 <li class="toc__entry">
-                    <a href="#starting-point" class="toc__link nav-link">Starting point</a>
+                    <a href="#location" class="toc__link nav-link">Location</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#git-clone" class="toc__link nav-link">git clone</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#prepare-configautoload-files" class="toc__link nav-link">Prepare config/autoload files</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#run-composer" class="toc__link nav-link">Run Composer</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#create-services-daemon" class="toc__link nav-link">Create services (daemon)</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#start-the-swoole-daemon" class="toc__link nav-link">Start the Swoole daemon</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#start-the-messenger-daemon" class="toc__link nav-link">Start the Messenger daemon</a>
                 </li>
             
             </ul>
@@ -345,87 +369,54 @@
                     
                     
 
-    <div class="alert alert-danger alert-caution" role="alert">
-        <p class="mb-0">
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v2) version.</a>
-        </p>
-    </div>
-
 
 
 
     
     
 
-    <h1 id="server-setup">Server setup</h1>
-<p>The below instructions were tested only on <strong>AlmaLinux 9</strong> or <strong>10</strong>.</p>
-<p><em>For other operating systems, they need to be adapted accordingly.</em></p>
+    <h1 id="installation">INSTALLATION</h1>
+<h2 id="location">Location</h2>
+<ul>
+<li>Because you are logged in now with the non-root user <code>dotkernel</code>, your current server path must be <code>/home/dotkernel</code></li>
+</ul>
 <blockquote>
-<p>We recommend the use of <a href="https://hetzner.cloud/?ref=HYu6z4XGfkcP">Hetzner Cloud via our referral link</a> for development thanks to the initial € 20 free <a href="https://www.hetzner.com/legal/referrals">Hetzner Cloud credit</a>.</p>
+<p>Please be sure you are using the non-root user for the below installation</p>
 </blockquote>
-<h2 id="starting-point">Starting point</h2>
-<p>A server with <strong>AlmaLinux 9</strong> or <strong>10</strong> freshly installed with <code>root</code> access.</p>
-<h3 id="update-os">Update OS</h3>
-<pre class="highlight"><code class="language-shell">dnf update -y</code></pre>
-<h3 id="create-a-new-user-with-sudo-permissions">Create a new user with sudo permissions</h3>
-<pre class="highlight"><code class="language-shell">useradd dotkernel</code></pre>
-<pre class="highlight"><code class="language-shell">passwd dotkernel</code></pre>
-<pre class="highlight"><code class="language-shell">usermod -aG wheel dotkernel</code></pre>
+<h2 id="git-clone">git clone</h2>
+<pre class="highlight"><code class="language-shell">git clone -b default-queue https://github.com/dotkernel/queue.git</code></pre>
 <blockquote>
-<p>Reboot server.</p>
-<p>SSH into the server as <code>dotkernel</code>.</p>
+<p>The installation path should be now <code>/home/dotkernel/queue</code></p>
 </blockquote>
-<h3 id="install-various-utilities">Install various utilities</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y dnf-utils</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf install zip unzip socat wget</code></pre>
-<h3 id="php">PHP</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-$(rpm -E %almalinux).rpm</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf module enable php:remi-8.4</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y php php-cli php-common php-intl</code></pre>
-<h3 id="start-php-fpm">Start PHP-FPM</h3>
-<pre class="highlight"><code class="language-shell">sudo systemctl start php-fpm</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable php-fpm</code></pre>
-<h3 id="install-and-verify-swoole">Install and verify swoole</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install php-pecl-swoole6</code></pre>
-<pre class="highlight"><code class="language-shell">php -i | grep swoole</code></pre>
-<h3 id="valkey">Valkey</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl start valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo valkey-cli ping</code></pre>
-<h3 id="valkey-php-module">Valkey PHP module</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install php-pecl-redis</code></pre>
-<p>Make sure that the module is installed.</p>
-<pre class="highlight"><code class="language-shell">php -i | grep redis</code></pre>
-<h3 id="git">Git</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install git</code></pre>
-<h3 id="composer">Composer</h3>
-<pre class="highlight"><code class="language-shell">sudo wget https://getcomposer.org/installer -O composer-installer.php</code></pre>
-<pre class="highlight"><code class="language-shell">sudo chmod 777 /usr/local/bin</code></pre>
-<pre class="highlight"><code class="language-shell">sudo php composer-installer.php --filename=composer --install-dir=/usr/local/bin</code></pre>
-<h3 id="firewall-setup">Firewall setup</h3>
-<p>To add a minimum level of security, a firewall needs to be installed and allow connections from outside only to certain ports, from certain IPs.</p>
-<blockquote>
-<p>Firewall setup is not mandatory</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo dnf install firewalld</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable firewalld</code></pre>
-<blockquote>
-<p>Before starting the firewall, make sure you will not get locked outside:</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo firewall-offline-cmd --zone=public --add-port=22/tcp --permanent</code></pre>
-<p>Then enable the firewall:</p>
-<pre class="highlight"><code class="language-shell">sudo systemctl start firewalld</code></pre>
-<blockquote>
-<p>By default, Swoole runs on port <strong>8556</strong>.
-You can change that in the configuration file.</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="YOUR_IP_ADDRESS" port port="8556" protocol="tcp" accept'</code></pre>
-<pre class="highlight"><code class="language-shell">sudo firewall-cmd --reload</code></pre>
-<blockquote>
-<p>NOW THE SERVER IS READY</p>
-</blockquote>
+<h2 id="prepare-configautoload-files">Prepare <code>config/autoload</code> files</h2>
+<ul>
+<li>duplicate <code>local.php.dist</code> as <code>local.php</code>, then fill in the database credentials and set the <code>$baseUrl</code></li>
+<li>duplicate <code>log.local.dist</code> as <code>log.local</code></li>
+<li>duplicate <code>messenger.local.php.dist</code> as <code>messenger.local.php</code></li>
+<li>duplicate <code>swoole.local.php.dist</code> as <code>swoole.local.php</code></li>
+</ul>
+<h2 id="run-composer">Run Composer</h2>
+<pre class="highlight"><code class="language-shell">composer install --no-dev</code></pre>
+<h2 id="create-services-daemon">Create services (daemon)</h2>
+<ul>
+<li>Edit the files from <code>/daemon</code> folder and set proper paths</li>
+<li>copy them in /etc/systemd/system/</li>
+</ul>
+<pre class="highlight"><code class="language-shell">sudo cp /home/dotkernel/queue/daemon/swoole.service /etc/systemd/system/swoole.service</code></pre>
+<pre class="highlight"><code class="language-shell">sudo cp /home/dotkernel/queue/daemon/messenger.service  /etc/systemd/system/messenger.service</code></pre>
+<h2 id="start-the-swoole-daemon">Start the Swoole daemon</h2>
+<pre class="highlight"><code class="language-shell">sudo systemctl daemon-reload</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl enable swoole.service</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl start swoole.service</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl status  swoole.service</code></pre>
+<h2 id="start-the-messenger-daemon">Start the Messenger daemon</h2>
+<pre class="highlight"><code class="language-shell">sudo systemctl daemon-reload</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl enable messenger.service</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl start messenger.service</code></pre>
+<pre class="highlight"><code class="language-shell">sudo systemctl status  messenger.service</code></pre>
+<h3 id="testing-the-installation">Testing the installation</h3>
+<p>Send a request from your local machine</p>
+<pre class="highlight"><code class="language-shell">echo "Hello" | socat -T1 - TCP:SERVER-IP:8556`</code></pre>
 
 
 
@@ -435,9 +426,9 @@ You can change that in the configuration file.</p>
         
         <li class="col text-nowrap text-md-start">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../what-is-queue/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../server-setup/">
                     <i class="bi bi-chevron-left"></i>
-                    Understanding the Queue
+                    Server Setup
                 </a>
             
         </li>
@@ -445,8 +436,8 @@ You can change that in the configuration file.</p>
         
         <li class="col text-nowrap text-md-end pe-0">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../installation/">
-                    Installation
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../messenger-configuration/">
+                    Messenger Configuration
                     <i class="bi bi-chevron-right"></i>
                 </a>
             

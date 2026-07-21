@@ -18,7 +18,7 @@
         <meta name="docsearch:component" content="queue">
 
         
-        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v1/server-setup/">
+        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v2/server-setup/">
         
         <link rel="shortcut icon" href="https://docs.dotkernel.org/img/dk_docs_favicon_white.svg">
 
@@ -149,13 +149,13 @@
         <div class="btn-group">
             <button type="button" class="btn dropdown-toggle bg-light" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
                 
-                    v1
+                    v2
                 
             </button>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
                 
                 
-                <a href="../../v2/overview/" class="dropdown-item">
+                <a href="../overview/" class="dropdown-item active">
                     
                         v2 (latest)
                     
@@ -163,7 +163,7 @@
                 
                 
                 
-                <a href="../overview/" class="dropdown-item active">
+                <a href="../../v1/overview/" class="dropdown-item">
                     
                         v1
                     
@@ -220,14 +220,6 @@
         <h5 class="subnavigation__title">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                
             
 
                 
@@ -315,6 +307,14 @@
                     
                 
             
+
+                
+                
+
+                    
+                    
+                
+            
         </ul>
     </div>
 
@@ -345,13 +345,6 @@
                     
                     
 
-    <div class="alert alert-danger alert-caution" role="alert">
-        <p class="mb-0">
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v2) version.</a>
-        </p>
-    </div>
-
 
 
 
@@ -381,7 +374,7 @@
 <pre class="highlight"><code class="language-shell">sudo dnf install zip unzip socat wget</code></pre>
 <h3 id="php">PHP</h3>
 <pre class="highlight"><code class="language-shell">sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-$(rpm -E %almalinux).rpm</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf module enable php:remi-8.4</code></pre>
+<pre class="highlight"><code class="language-shell">sudo dnf module enable php:remi-8.5</code></pre>
 <pre class="highlight"><code class="language-shell">sudo dnf install -y php php-cli php-common php-intl</code></pre>
 <h3 id="start-php-fpm">Start PHP-FPM</h3>
 <pre class="highlight"><code class="language-shell">sudo systemctl start php-fpm</code></pre>

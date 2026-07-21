@@ -18,11 +18,11 @@
         <meta name="docsearch:component" content="queue">
 
         
-        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v1/server-setup/">
+        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v2/what-is-queue/">
         
         <link rel="shortcut icon" href="https://docs.dotkernel.org/img/dk_docs_favicon_white.svg">
 
-        <title>Server Setup - queue - Dotkernel Documentation</title>
+        <title>Understanding the Queue - queue - Dotkernel Documentation</title>
 
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap.css">
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap-icons.min.css">
@@ -149,13 +149,13 @@
         <div class="btn-group">
             <button type="button" class="btn dropdown-toggle bg-light" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
                 
-                    v1
+                    v2
                 
             </button>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
                 
                 
-                <a href="../../v2/overview/" class="dropdown-item">
+                <a href="../overview/" class="dropdown-item active">
                     
                         v2 (latest)
                     
@@ -163,7 +163,7 @@
                 
                 
                 
-                <a href="../overview/" class="dropdown-item active">
+                <a href="../../v1/overview/" class="dropdown-item">
                     
                         v1
                     
@@ -199,7 +199,7 @@
                         
                     
 
-                    <li class="breadcrumb-item active" aria-current="page">Server Setup</li>
+                    <li class="breadcrumb-item active" aria-current="page">Understanding the Queue</li>
                 
             
         </ol>
@@ -224,14 +224,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
 <li class="subnavigation__list-item ">
@@ -240,14 +232,14 @@
 
                     
                         
-<li class="subnavigation__list-item ">
-    <a href="../what-is-queue/" class="subnavigation__link">Understanding the Queue</a>
+<li class="subnavigation__list-item subnavigation__list-item--active">
+    <a href="./" class="subnavigation__link">Understanding the Queue</a>
 </li>
 
                     
                         
-<li class="subnavigation__list-item subnavigation__list-item--active">
-    <a href="./" class="subnavigation__link">Server Setup</a>
+<li class="subnavigation__list-item ">
+    <a href="../server-setup/" class="subnavigation__link">Server Setup</a>
 </li>
 
                     
@@ -315,6 +307,14 @@
                     
                 
             
+
+                
+                
+
+                    
+                    
+                
+            
         </ul>
     </div>
 
@@ -332,7 +332,11 @@
             <ul class="toc__list">
             
                 <li class="toc__entry">
-                    <a href="#starting-point" class="toc__link nav-link">Starting point</a>
+                    <a href="#how-the-queue-works" class="toc__link nav-link">How the Queue Works</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#main-features" class="toc__link nav-link">Main Features</a>
                 </li>
             
             </ul>
@@ -345,87 +349,54 @@
                     
                     
 
-    <div class="alert alert-danger alert-caution" role="alert">
-        <p class="mb-0">
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v2) version.</a>
-        </p>
-    </div>
-
 
 
 
     
     
 
-    <h1 id="server-setup">Server setup</h1>
-<p>The below instructions were tested only on <strong>AlmaLinux 9</strong> or <strong>10</strong>.</p>
-<p><em>For other operating systems, they need to be adapted accordingly.</em></p>
-<blockquote>
-<p>We recommend the use of <a href="https://hetzner.cloud/?ref=HYu6z4XGfkcP">Hetzner Cloud via our referral link</a> for development thanks to the initial € 20 free <a href="https://www.hetzner.com/legal/referrals">Hetzner Cloud credit</a>.</p>
-</blockquote>
-<h2 id="starting-point">Starting point</h2>
-<p>A server with <strong>AlmaLinux 9</strong> or <strong>10</strong> freshly installed with <code>root</code> access.</p>
-<h3 id="update-os">Update OS</h3>
-<pre class="highlight"><code class="language-shell">dnf update -y</code></pre>
-<h3 id="create-a-new-user-with-sudo-permissions">Create a new user with sudo permissions</h3>
-<pre class="highlight"><code class="language-shell">useradd dotkernel</code></pre>
-<pre class="highlight"><code class="language-shell">passwd dotkernel</code></pre>
-<pre class="highlight"><code class="language-shell">usermod -aG wheel dotkernel</code></pre>
-<blockquote>
-<p>Reboot server.</p>
-<p>SSH into the server as <code>dotkernel</code>.</p>
-</blockquote>
-<h3 id="install-various-utilities">Install various utilities</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y dnf-utils</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf install zip unzip socat wget</code></pre>
-<h3 id="php">PHP</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-$(rpm -E %almalinux).rpm</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf module enable php:remi-8.4</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y php php-cli php-common php-intl</code></pre>
-<h3 id="start-php-fpm">Start PHP-FPM</h3>
-<pre class="highlight"><code class="language-shell">sudo systemctl start php-fpm</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable php-fpm</code></pre>
-<h3 id="install-and-verify-swoole">Install and verify swoole</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install php-pecl-swoole6</code></pre>
-<pre class="highlight"><code class="language-shell">php -i | grep swoole</code></pre>
-<h3 id="valkey">Valkey</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl start valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo valkey-cli ping</code></pre>
-<h3 id="valkey-php-module">Valkey PHP module</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install php-pecl-redis</code></pre>
-<p>Make sure that the module is installed.</p>
-<pre class="highlight"><code class="language-shell">php -i | grep redis</code></pre>
-<h3 id="git">Git</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install git</code></pre>
-<h3 id="composer">Composer</h3>
-<pre class="highlight"><code class="language-shell">sudo wget https://getcomposer.org/installer -O composer-installer.php</code></pre>
-<pre class="highlight"><code class="language-shell">sudo chmod 777 /usr/local/bin</code></pre>
-<pre class="highlight"><code class="language-shell">sudo php composer-installer.php --filename=composer --install-dir=/usr/local/bin</code></pre>
-<h3 id="firewall-setup">Firewall setup</h3>
-<p>To add a minimum level of security, a firewall needs to be installed and allow connections from outside only to certain ports, from certain IPs.</p>
-<blockquote>
-<p>Firewall setup is not mandatory</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo dnf install firewalld</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable firewalld</code></pre>
-<blockquote>
-<p>Before starting the firewall, make sure you will not get locked outside:</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo firewall-offline-cmd --zone=public --add-port=22/tcp --permanent</code></pre>
-<p>Then enable the firewall:</p>
-<pre class="highlight"><code class="language-shell">sudo systemctl start firewalld</code></pre>
-<blockquote>
-<p>By default, Swoole runs on port <strong>8556</strong>.
-You can change that in the configuration file.</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="YOUR_IP_ADDRESS" port port="8556" protocol="tcp" accept'</code></pre>
-<pre class="highlight"><code class="language-shell">sudo firewall-cmd --reload</code></pre>
-<blockquote>
-<p>NOW THE SERVER IS READY</p>
-</blockquote>
+    <h1 id="tasks-delegated-to-the-queue">Tasks Delegated to the Queue</h1>
+<p>Normally, the tasks delegated to the queue:</p>
+<ul>
+<li>Take extended periods of time to execute and may be interrupted by PHP limitations (like the PHP <code>max_execution_time</code> parameter).</li>
+<li>Are external which introduces delays from authentication, awaiting responses from potentially multiple interrogations, or may even fail completely because the server is offline.</li>
+<li>Are not part of the PHP response (sending emails, processing videos).</li>
+</ul>
+<p>Here are some example tasks meant for the queue:</p>
+<ul>
+<li><strong>Data Processing</strong> like big data analytics, scientific simulations, or mathematical computations.</li>
+<li><strong>File Handling &amp; Media Processing</strong> like video and image processing, or compression/decompression of large files.</li>
+<li><strong>Networking</strong> like uploading/downloading large files.</li>
+<li><strong>Database Operations</strong> like imports/exports or migrations.</li>
+<li><strong>System &amp; Infrastructure Tasks</strong> like OS updates, software compilation, CI pipelines.</li>
+</ul>
+<p>The long execution times are caused by:</p>
+<ul>
+<li>Data size - gigabytes, terabytes etc.</li>
+<li>Complex algorithms.</li>
+<li>Hardware limitations - CPU speed, memory, storage, network bandwidth.</li>
+<li>External dependencies - waiting on APIs or human input.</li>
+</ul>
+<h2 id="how-the-queue-works">How the Queue Works</h2>
+<ul>
+<li>The queue system has an active <strong>daemon</strong> that listens for TPC connections on a specific port and <strong>stores incoming messages</strong> into Redis.
+This method supports a <strong>large number of requests per second</strong> without overloading.</li>
+<li>Operations are then <strong>scheduled for execution</strong> when resources are available.
+The order of the execution uses the <strong>FIFO</strong> (First-In, First-Out) method where the oldest request is processed first, followed by newer requests.</li>
+</ul>
+<h2 id="main-features">Main Features</h2>
+<ul>
+<li><strong>Logging</strong> - Ensures maintainability and allows debugging.</li>
+<li><strong>Security</strong> - The <strong>firewall</strong> allows requests only from whitelisted IPs for fast response times.</li>
+<li><strong>Retry Mechanism</strong> - Retries failing tasks a certain number of times before removing a task from the queue.</li>
+<li><strong>Reporting</strong> - The logs enable developers to investigate various metrics via console commands like:<ul>
+<li>Queue length - How many jobs are in the to-do list.</li>
+<li>Processing time per job.</li>
+<li>Error rates - How many messages failed.</li>
+<li>Throughput - Jobs/sec processed.</li>
+</ul>
+</li>
+</ul>
 
 
 
@@ -435,9 +406,9 @@ You can change that in the configuration file.</p>
         
         <li class="col text-nowrap text-md-start">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../what-is-queue/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../overview/">
                     <i class="bi bi-chevron-left"></i>
-                    Understanding the Queue
+                    Overview
                 </a>
             
         </li>
@@ -445,8 +416,8 @@ You can change that in the configuration file.</p>
         
         <li class="col text-nowrap text-md-end pe-0">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../installation/">
-                    Installation
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../server-setup/">
+                    Server Setup
                     <i class="bi bi-chevron-right"></i>
                 </a>
             

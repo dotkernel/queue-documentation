@@ -18,11 +18,11 @@
         <meta name="docsearch:component" content="queue">
 
         
-        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v1/server-setup/">
+        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v2/messenger-configuration/">
         
         <link rel="shortcut icon" href="https://docs.dotkernel.org/img/dk_docs_favicon_white.svg">
 
-        <title>Server Setup - queue - Dotkernel Documentation</title>
+        <title>Messenger Configuration - queue - Dotkernel Documentation</title>
 
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap.css">
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap-icons.min.css">
@@ -149,13 +149,13 @@
         <div class="btn-group">
             <button type="button" class="btn dropdown-toggle bg-light" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
                 
-                    v1
+                    v2
                 
             </button>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
                 
                 
-                <a href="../../v2/overview/" class="dropdown-item">
+                <a href="../overview/" class="dropdown-item active">
                     
                         v2 (latest)
                     
@@ -163,7 +163,7 @@
                 
                 
                 
-                <a href="../overview/" class="dropdown-item active">
+                <a href="../../v1/overview/" class="dropdown-item">
                     
                         v1
                     
@@ -199,7 +199,7 @@
                         
                     
 
-                    <li class="breadcrumb-item active" aria-current="page">Server Setup</li>
+                    <li class="breadcrumb-item active" aria-current="page">Messenger Configuration</li>
                 
             
         </ol>
@@ -224,14 +224,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
 <li class="subnavigation__list-item ">
@@ -246,8 +238,8 @@
 
                     
                         
-<li class="subnavigation__list-item subnavigation__list-item--active">
-    <a href="./" class="subnavigation__link">Server Setup</a>
+<li class="subnavigation__list-item ">
+    <a href="../server-setup/" class="subnavigation__link">Server Setup</a>
 </li>
 
                     
@@ -258,8 +250,8 @@
 
                     
                         
-<li class="subnavigation__list-item ">
-    <a href="../messenger-configuration/" class="subnavigation__link">Messenger Configuration</a>
+<li class="subnavigation__list-item subnavigation__list-item--active">
+    <a href="./" class="subnavigation__link">Messenger Configuration</a>
 </li>
 
                     
@@ -315,6 +307,14 @@
                     
                 
             
+
+                
+                
+
+                    
+                    
+                
+            
         </ul>
     </div>
 
@@ -332,7 +332,11 @@
             <ul class="toc__list">
             
                 <li class="toc__entry">
-                    <a href="#starting-point" class="toc__link nav-link">Starting point</a>
+                    <a href="#main-queue-stream-messages" class="toc__link nav-link">Main queue stream (messages)</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#dead-letter-queue-dlq" class="toc__link nav-link">Dead Letter Queue (DLQ)</a>
                 </li>
             
             </ul>
@@ -345,87 +349,58 @@
                     
                     
 
-    <div class="alert alert-danger alert-caution" role="alert">
-        <p class="mb-0">
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v2) version.</a>
-        </p>
-    </div>
-
 
 
 
     
     
 
-    <h1 id="server-setup">Server setup</h1>
-<p>The below instructions were tested only on <strong>AlmaLinux 9</strong> or <strong>10</strong>.</p>
-<p><em>For other operating systems, they need to be adapted accordingly.</em></p>
-<blockquote>
-<p>We recommend the use of <a href="https://hetzner.cloud/?ref=HYu6z4XGfkcP">Hetzner Cloud via our referral link</a> for development thanks to the initial € 20 free <a href="https://www.hetzner.com/legal/referrals">Hetzner Cloud credit</a>.</p>
-</blockquote>
-<h2 id="starting-point">Starting point</h2>
-<p>A server with <strong>AlmaLinux 9</strong> or <strong>10</strong> freshly installed with <code>root</code> access.</p>
-<h3 id="update-os">Update OS</h3>
-<pre class="highlight"><code class="language-shell">dnf update -y</code></pre>
-<h3 id="create-a-new-user-with-sudo-permissions">Create a new user with sudo permissions</h3>
-<pre class="highlight"><code class="language-shell">useradd dotkernel</code></pre>
-<pre class="highlight"><code class="language-shell">passwd dotkernel</code></pre>
-<pre class="highlight"><code class="language-shell">usermod -aG wheel dotkernel</code></pre>
-<blockquote>
-<p>Reboot server.</p>
-<p>SSH into the server as <code>dotkernel</code>.</p>
-</blockquote>
-<h3 id="install-various-utilities">Install various utilities</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y dnf-utils</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf install zip unzip socat wget</code></pre>
-<h3 id="php">PHP</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-$(rpm -E %almalinux).rpm</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf module enable php:remi-8.4</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y php php-cli php-common php-intl</code></pre>
-<h3 id="start-php-fpm">Start PHP-FPM</h3>
-<pre class="highlight"><code class="language-shell">sudo systemctl start php-fpm</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable php-fpm</code></pre>
-<h3 id="install-and-verify-swoole">Install and verify swoole</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install php-pecl-swoole6</code></pre>
-<pre class="highlight"><code class="language-shell">php -i | grep swoole</code></pre>
-<h3 id="valkey">Valkey</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl start valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo valkey-cli ping</code></pre>
-<h3 id="valkey-php-module">Valkey PHP module</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install php-pecl-redis</code></pre>
-<p>Make sure that the module is installed.</p>
-<pre class="highlight"><code class="language-shell">php -i | grep redis</code></pre>
-<h3 id="git">Git</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install git</code></pre>
-<h3 id="composer">Composer</h3>
-<pre class="highlight"><code class="language-shell">sudo wget https://getcomposer.org/installer -O composer-installer.php</code></pre>
-<pre class="highlight"><code class="language-shell">sudo chmod 777 /usr/local/bin</code></pre>
-<pre class="highlight"><code class="language-shell">sudo php composer-installer.php --filename=composer --install-dir=/usr/local/bin</code></pre>
-<h3 id="firewall-setup">Firewall setup</h3>
-<p>To add a minimum level of security, a firewall needs to be installed and allow connections from outside only to certain ports, from certain IPs.</p>
-<blockquote>
-<p>Firewall setup is not mandatory</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo dnf install firewalld</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable firewalld</code></pre>
-<blockquote>
-<p>Before starting the firewall, make sure you will not get locked outside:</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo firewall-offline-cmd --zone=public --add-port=22/tcp --permanent</code></pre>
-<p>Then enable the firewall:</p>
-<pre class="highlight"><code class="language-shell">sudo systemctl start firewalld</code></pre>
-<blockquote>
-<p>By default, Swoole runs on port <strong>8556</strong>.
-You can change that in the configuration file.</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="YOUR_IP_ADDRESS" port port="8556" protocol="tcp" accept'</code></pre>
-<pre class="highlight"><code class="language-shell">sudo firewall-cmd --reload</code></pre>
-<blockquote>
-<p>NOW THE SERVER IS READY</p>
-</blockquote>
+    <h1 id="messenger-configuration">Messenger Configuration</h1>
+<pre class="highlight"><code class="language-php">return [
+    'symfony'      =&gt; [
+        'messenger' =&gt; [
+            'transports'        =&gt; [
+                'redis_transport' =&gt; [
+                    // specifies the Redis server and stream/key
+                    // messages is the main stream where new messages are initially stored
+                    'dsn'            =&gt; 'redis://127.0.0.1:6379/messages',
+                    // defines which serializer to use to encode/decode messages
+                    'serializer'     =&gt; SymfonySerializer::class,
+                    'retry_strategy' =&gt; [
+                        // maximum number of retry attempts before moving a message to the failure transport
+                        'max_retries' =&gt; 3,
+                        // initial delay before retrying a failed message, in milliseconds
+                        'delay'       =&gt; 1000,
+                        // each retry’s delay is multiplied by this factor
+                        'multiplier'  =&gt; 2,
+                        // maximum delay allowed between retries, 0 means unlimited or default behavior
+                        'max_delay'   =&gt; 0,
+                    ],
+                ],
+                // defines a transport named failed, used to store messages that cannot be delivered after retries.
+                'failed'          =&gt; [
+                    // specifies the Redis server and stream/key
+                    'dsn'        =&gt; 'redis://127.0.0.1:6379/failed',
+                    // defines which serializer to use to encode/decode messages
+                    'serializer' =&gt; SymfonySerializer::class,
+                ],
+            ],
+            // tells Symfony Messenger to send messages that exceed retry limits to the failed transport
+            'failure_transport' =&gt; 'failed',
+        ],
+    ],
+    'dependencies' =&gt; [
+        'factories'&gt; [
+            'redis_transport'        =&gt; [TransportFactory::class, 'redis_transport'],
+            'failed'                 =&gt; [TransportFactory::class, 'failed'],
+            SymfonySerializer::class =&gt; fn(ContainerInterface $container) =&gt; new PhpSerializer(),
+        ],
+    ],
+];</code></pre>
+<h2 id="main-queue-stream-messages">Main queue stream (<code>messages</code>)</h2>
+<p><code>messages</code> stream is the main queue where all new messages are initially stored. The Messenger worker consume messages from this stream and attempt to process them according to the application logic.</p>
+<h2 id="dead-letter-queue-dlq">Dead Letter Queue (DLQ)</h2>
+<p>DLQ is a dedicated transport where messages are sent when they fail to be processed after a configured number of retries. Each transport can define a retry_strategy specifying the maximum number of retry attempts, delays between retries, and exponential backoff rules. When a message exceeds the allowed retries, it is automatically forwarded to the failure transport and stored in <code>failed</code> stream, ensuring that failed messages do not block the queue.</p>
 
 
 
@@ -435,9 +410,9 @@ You can change that in the configuration file.</p>
         
         <li class="col text-nowrap text-md-start">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../what-is-queue/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../installation/">
                     <i class="bi bi-chevron-left"></i>
-                    Understanding the Queue
+                    Installation
                 </a>
             
         </li>
@@ -445,8 +420,8 @@ You can change that in the configuration file.</p>
         
         <li class="col text-nowrap text-md-end pe-0">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../installation/">
-                    Installation
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../control-commands/">
+                    Control Commands
                     <i class="bi bi-chevron-right"></i>
                 </a>
             

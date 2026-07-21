@@ -18,11 +18,11 @@
         <meta name="docsearch:component" content="queue">
 
         
-        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v1/server-setup/">
+        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v2/control-commands/">
         
         <link rel="shortcut icon" href="https://docs.dotkernel.org/img/dk_docs_favicon_white.svg">
 
-        <title>Server Setup - queue - Dotkernel Documentation</title>
+        <title>Control Commands - queue - Dotkernel Documentation</title>
 
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap.css">
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap-icons.min.css">
@@ -149,13 +149,13 @@
         <div class="btn-group">
             <button type="button" class="btn dropdown-toggle bg-light" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
                 
-                    v1
+                    v2
                 
             </button>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
                 
                 
-                <a href="../../v2/overview/" class="dropdown-item">
+                <a href="../overview/" class="dropdown-item active">
                     
                         v2 (latest)
                     
@@ -163,7 +163,7 @@
                 
                 
                 
-                <a href="../overview/" class="dropdown-item active">
+                <a href="../../v1/overview/" class="dropdown-item">
                     
                         v1
                     
@@ -199,7 +199,7 @@
                         
                     
 
-                    <li class="breadcrumb-item active" aria-current="page">Server Setup</li>
+                    <li class="breadcrumb-item active" aria-current="page">Control Commands</li>
                 
             
         </ol>
@@ -224,14 +224,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
 <li class="subnavigation__list-item ">
@@ -246,8 +238,8 @@
 
                     
                         
-<li class="subnavigation__list-item subnavigation__list-item--active">
-    <a href="./" class="subnavigation__link">Server Setup</a>
+<li class="subnavigation__list-item ">
+    <a href="../server-setup/" class="subnavigation__link">Server Setup</a>
 </li>
 
                     
@@ -264,8 +256,8 @@
 
                     
                         
-<li class="subnavigation__list-item ">
-    <a href="../control-commands/" class="subnavigation__link">Control Commands</a>
+<li class="subnavigation__list-item subnavigation__list-item--active">
+    <a href="./" class="subnavigation__link">Control Commands</a>
 </li>
 
                     
@@ -315,6 +307,14 @@
                     
                 
             
+
+                
+                
+
+                    
+                    
+                
+            
         </ul>
     </div>
 
@@ -332,7 +332,11 @@
             <ul class="toc__list">
             
                 <li class="toc__entry">
-                    <a href="#starting-point" class="toc__link nav-link">Starting point</a>
+                    <a href="#cli" class="toc__link nav-link">CLI</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#tcp-message" class="toc__link nav-link">TCP message</a>
                 </li>
             
             </ul>
@@ -345,87 +349,36 @@
                     
                     
 
-    <div class="alert alert-danger alert-caution" role="alert">
-        <p class="mb-0">
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v2) version.</a>
-        </p>
-    </div>
-
 
 
 
     
     
 
-    <h1 id="server-setup">Server setup</h1>
-<p>The below instructions were tested only on <strong>AlmaLinux 9</strong> or <strong>10</strong>.</p>
-<p><em>For other operating systems, they need to be adapted accordingly.</em></p>
+    <h1 id="available-commands-and-usage">Available commands and usage</h1>
+<p>The commands available are:</p>
+<ol>
+<li><code>GetFailedMessagesCommand.php (failed)</code> - returns logs with messages that failed to process (levelName:error)</li>
+<li><code>GetProcessedMessagesCommand.php (processed)</code> - returns logs with messages that were successfully processed (levelName:info)</li>
+<li><code>GetQueuedMessagesCommand (inventory)</code> - returns all queued messages from Redis stream 'messages'</li>
+</ol>
+<p>The commands can be run in two different ways:</p>
+<h2 id="cli">CLI</h2>
+<p>To run the commands via CLI, use the following syntax:</p>
+<pre class="highlight"><code class="language-shell">php bin/cli.php failed --start="yyyy-mm-dd" --end="yyyy-mm-dd" --limit=int</code></pre>
+<pre class="highlight"><code class="language-shell">php bin/cli.php processed --start="yyyy-mm-dd" --end="yyyy-mm-dd" --limit=int</code></pre>
+<pre class="highlight"><code class="language-shell">php bin/cli.php inventory</code></pre>
+<h2 id="tcp-message">TCP message</h2>
+<p>To use commands using TCP messages, the following messages can be used:</p>
+<pre class="highlight"><code class="language-shell">echo "failed --start=yyyy-mm-dd --end=yyyy-mm-dd --limit=days" | socat -t1 - TCP:host:port</code></pre>
+<pre class="highlight"><code class="language-shell">echo "processed --start=yyyy-mm-dd --end=yyyy-mm-dd --limit=days" | socat -t1 - TCP:host:port</code></pre>
+<p>In both cases, the flags are optional. Keep in mind if both <code>start</code> and <code>end</code> are set, <code>limit</code> will not be applied, it's only used when one of <code>start</code> or <code>end</code> is missing.</p>
+<p>To be able to test the <code>processed</code> command, by default when processing the "control" message, it is logged as successfully processed with <code>"levelName":"info"</code> simulating that the message was processed successfully. To use it, run the following message:</p>
+<pre class="highlight"><code class="language-shell">echo "control" | socat -t1 - TCP:host:port</code></pre>
 <blockquote>
-<p>We recommend the use of <a href="https://hetzner.cloud/?ref=HYu6z4XGfkcP">Hetzner Cloud via our referral link</a> for development thanks to the initial € 20 free <a href="https://www.hetzner.com/legal/referrals">Hetzner Cloud credit</a>.</p>
+<p>Using <code>-t1</code> flag is not necessary but can be useful, it is used to set a timeout of n seconds for both reading and writing; after n second of inactivity, socat will terminate the connection. If the timeout is not set and the server does not respond or keep the connection open, the socat process could freeze indefinitely.</p>
 </blockquote>
-<h2 id="starting-point">Starting point</h2>
-<p>A server with <strong>AlmaLinux 9</strong> or <strong>10</strong> freshly installed with <code>root</code> access.</p>
-<h3 id="update-os">Update OS</h3>
-<pre class="highlight"><code class="language-shell">dnf update -y</code></pre>
-<h3 id="create-a-new-user-with-sudo-permissions">Create a new user with sudo permissions</h3>
-<pre class="highlight"><code class="language-shell">useradd dotkernel</code></pre>
-<pre class="highlight"><code class="language-shell">passwd dotkernel</code></pre>
-<pre class="highlight"><code class="language-shell">usermod -aG wheel dotkernel</code></pre>
-<blockquote>
-<p>Reboot server.</p>
-<p>SSH into the server as <code>dotkernel</code>.</p>
-</blockquote>
-<h3 id="install-various-utilities">Install various utilities</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y dnf-utils</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf install zip unzip socat wget</code></pre>
-<h3 id="php">PHP</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-$(rpm -E %almalinux).rpm</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf module enable php:remi-8.4</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y php php-cli php-common php-intl</code></pre>
-<h3 id="start-php-fpm">Start PHP-FPM</h3>
-<pre class="highlight"><code class="language-shell">sudo systemctl start php-fpm</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable php-fpm</code></pre>
-<h3 id="install-and-verify-swoole">Install and verify swoole</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install php-pecl-swoole6</code></pre>
-<pre class="highlight"><code class="language-shell">php -i | grep swoole</code></pre>
-<h3 id="valkey">Valkey</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl start valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo valkey-cli ping</code></pre>
-<h3 id="valkey-php-module">Valkey PHP module</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install php-pecl-redis</code></pre>
-<p>Make sure that the module is installed.</p>
-<pre class="highlight"><code class="language-shell">php -i | grep redis</code></pre>
-<h3 id="git">Git</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install git</code></pre>
-<h3 id="composer">Composer</h3>
-<pre class="highlight"><code class="language-shell">sudo wget https://getcomposer.org/installer -O composer-installer.php</code></pre>
-<pre class="highlight"><code class="language-shell">sudo chmod 777 /usr/local/bin</code></pre>
-<pre class="highlight"><code class="language-shell">sudo php composer-installer.php --filename=composer --install-dir=/usr/local/bin</code></pre>
-<h3 id="firewall-setup">Firewall setup</h3>
-<p>To add a minimum level of security, a firewall needs to be installed and allow connections from outside only to certain ports, from certain IPs.</p>
-<blockquote>
-<p>Firewall setup is not mandatory</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo dnf install firewalld</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable firewalld</code></pre>
-<blockquote>
-<p>Before starting the firewall, make sure you will not get locked outside:</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo firewall-offline-cmd --zone=public --add-port=22/tcp --permanent</code></pre>
-<p>Then enable the firewall:</p>
-<pre class="highlight"><code class="language-shell">sudo systemctl start firewalld</code></pre>
-<blockquote>
-<p>By default, Swoole runs on port <strong>8556</strong>.
-You can change that in the configuration file.</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="YOUR_IP_ADDRESS" port port="8556" protocol="tcp" accept'</code></pre>
-<pre class="highlight"><code class="language-shell">sudo firewall-cmd --reload</code></pre>
-<blockquote>
-<p>NOW THE SERVER IS READY</p>
-</blockquote>
+<pre class="highlight"><code class="language-shell">echo "inventory" | socat -t1 - TCP:host:port</code></pre>
 
 
 
@@ -435,9 +388,9 @@ You can change that in the configuration file.</p>
         
         <li class="col text-nowrap text-md-start">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../what-is-queue/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../messenger-configuration/">
                     <i class="bi bi-chevron-left"></i>
-                    Understanding the Queue
+                    Messenger Configuration
                 </a>
             
         </li>
@@ -445,8 +398,8 @@ You can change that in the configuration file.</p>
         
         <li class="col text-nowrap text-md-end pe-0">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../installation/">
-                    Installation
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../valkey/">
+                    Valkey
                     <i class="bi bi-chevron-right"></i>
                 </a>
             

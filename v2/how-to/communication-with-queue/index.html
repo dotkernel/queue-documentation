@@ -18,11 +18,11 @@
         <meta name="docsearch:component" content="queue">
 
         
-        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v1/server-setup/">
+        <link rel="canonical" href="https://docs.dotkernel.org/queue-documentation/v2/how-to/communication-with-queue/">
         
         <link rel="shortcut icon" href="https://docs.dotkernel.org/img/dk_docs_favicon_white.svg">
 
-        <title>Server Setup - queue - Dotkernel Documentation</title>
+        <title>Communication With Queue - queue - Dotkernel Documentation</title>
 
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap.css">
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap-icons.min.css">
@@ -149,13 +149,13 @@
         <div class="btn-group">
             <button type="button" class="btn dropdown-toggle bg-light" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
                 
-                    v1
+                    v2
                 
             </button>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
                 
                 
-                <a href="../../v2/overview/" class="dropdown-item">
+                <a href="../../overview/" class="dropdown-item active">
                     
                         v2 (latest)
                     
@@ -163,7 +163,7 @@
                 
                 
                 
-                <a href="../overview/" class="dropdown-item active">
+                <a href="../../../v1/overview/" class="dropdown-item">
                     
                         v1
                     
@@ -190,7 +190,7 @@
                 
 
                 
-                    <li class="breadcrumb-item"><a href="../..">queue</a></li>
+                    <li class="breadcrumb-item"><a href="../../..">queue</a></li>
 
                     
                         
@@ -198,8 +198,15 @@
                             
                         
                     
+                        
+                            
+                            
+                                <li class="breadcrumb-item">How to</li>
+                            
+                        
+                    
 
-                    <li class="breadcrumb-item active" aria-current="page">Server Setup</li>
+                    <li class="breadcrumb-item active" aria-current="page">Communication With Queue</li>
                 
             
         </ol>
@@ -214,7 +221,7 @@
                     
     <div class="subnavigation hidden-print">
 <!--        <h4 class="subnavigation__title">-->
-<!--            <a href="../..">queue</a>-->
+<!--            <a href="../../..">queue</a>-->
 <!--        </h4>-->
 
         <h5 class="subnavigation__title">Table of Contents</h5>
@@ -224,54 +231,46 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="../overview/" class="subnavigation__link">Overview</a>
+    <a href="../../overview/" class="subnavigation__link">Overview</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="../what-is-queue/" class="subnavigation__link">Understanding the Queue</a>
-</li>
-
-                    
-                        
-<li class="subnavigation__list-item subnavigation__list-item--active">
-    <a href="./" class="subnavigation__link">Server Setup</a>
+    <a href="../../what-is-queue/" class="subnavigation__link">Understanding the Queue</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="../installation/" class="subnavigation__link">Installation</a>
+    <a href="../../server-setup/" class="subnavigation__link">Server Setup</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="../messenger-configuration/" class="subnavigation__link">Messenger Configuration</a>
+    <a href="../../installation/" class="subnavigation__link">Installation</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="../control-commands/" class="subnavigation__link">Control Commands</a>
+    <a href="../../messenger-configuration/" class="subnavigation__link">Messenger Configuration</a>
 </li>
 
                     
                         
 <li class="subnavigation__list-item ">
-    <a href="../valkey/" class="subnavigation__link">Valkey</a>
+    <a href="../../control-commands/" class="subnavigation__link">Control Commands</a>
+</li>
+
+                    
+                        
+<li class="subnavigation__list-item ">
+    <a href="../../valkey/" class="subnavigation__link">Valkey</a>
 </li>
 
                     
@@ -298,20 +297,28 @@
     <ul class="subnavigation__list collapse" id="how-to">
         
         
-<li class="subnavigation__list-item ">
-    <a href="../how-to/communication-with-queue/" class="subnavigation__link">Communication With Queue</a>
+<li class="subnavigation__list-item subnavigation__list-item--active">
+    <a href="./" class="subnavigation__link">Communication With Queue</a>
 </li>
 
         
         
 <li class="subnavigation__list-item ">
-    <a href="../how-to/send-emails/" class="subnavigation__link">Send Emails</a>
+    <a href="../send-emails/" class="subnavigation__link">Send Emails</a>
 </li>
 
         
     </ul>
 </li>
 
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             
@@ -332,7 +339,27 @@
             <ul class="toc__list">
             
                 <li class="toc__entry">
-                    <a href="#starting-point" class="toc__link nav-link">Starting point</a>
+                    <a href="#procedural-approach" class="toc__link nav-link">Procedural approach</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#object-oriented-approach" class="toc__link nav-link">Object-oriented approach</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#step-1-notificationsystem-module" class="toc__link nav-link">Step 1 NotificationSystem module</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#step-2-install-new-dependencies" class="toc__link nav-link">Step 2 Install new dependencies</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#step-3-configuration" class="toc__link nav-link">Step 3 Configuration</a>
+                </li>
+            
+                <li class="toc__entry">
+                    <a href="#step-4-service-usage" class="toc__link nav-link">Step 4 Service usage</a>
                 </li>
             
             </ul>
@@ -345,87 +372,177 @@
                     
                     
 
-    <div class="alert alert-danger alert-caution" role="alert">
-        <p class="mb-0">
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v2) version.</a>
-        </p>
-    </div>
-
 
 
 
     
     
+<!--        <h2 class="chapter__headline text-black-50">How to</h2>-->
+    
 
-    <h1 id="server-setup">Server setup</h1>
-<p>The below instructions were tested only on <strong>AlmaLinux 9</strong> or <strong>10</strong>.</p>
-<p><em>For other operating systems, they need to be adapted accordingly.</em></p>
+    <h1 id="communicate-with-queue">COMMUNICATE WITH QUEUE</h1>
+<p>Communication with the  <a href="https://github.com/dotkernel/queue"><code>Dotkernel Queue</code></a> can be achieved in two different ways: procedural and object-oriented.</p>
+<h2 id="procedural-approach">Procedural approach</h2>
+<p>The main advantage of the procedural code is its simplicity, it directly connects to the queue server, sends the prepared data, and then closes the connection. In this example, the code opens a TCP connection to <code>localhost:8556</code>, checks if the connection is successful, sends data in JSON format, and closes the socket. This makes the logic easy to follow and quick to implement. The disadvantage of this approach is the difficulty of reusing and extending the code. As the complexity of the project increases by repeatedly using this approach, the code becomes more difficult to maintain and not as flexible compared to the object-oriented approach.</p>
+<pre class="highlight"><code class="language-php">// collect the PAYLOAD that will be sent to Dotkernel Queue 
+$data = $anyTypeOfData;
+
+// open TCP connection to Dotkernel Queue server
+// replace localhost with the IP of the Dotkernel Queue server
+// replace 8556 with the port number 
+$client = stream_socket_client("tcp://localhost:8556", $errno, $errstr, 30);
+
+if (! $client) {
+    // log errors
+    error_log("Connection error: $errstr ($errno)");
+} else {
+    // send the PAYLOAD to Dotkernel Queue 
+    fwrite($client, json_encode($data) . "\n");
+    // make sure your message ends with a new line
+    // this allows the stream to know when the message is complete
+    // without it, the server might keep waiting, and not process what was sent
+
+    fclose($client);
+    // close connection 
+}</code></pre>
+<h2 id="object-oriented-approach">Object-oriented approach</h2>
+<p>Using object-oriented approach, queue is accessed through dedicated classes and objects. Instead of calling functions directly, you instantiate objects that encapsulate the behavior of the queue. This approach offers reusability, maintainability, and cleaner separation of responsibilities, which is especially beneficial in larger applications.</p>
+<p>To implement this approach you need to follow a few simple steps:</p>
+<h2 id="step-1-notificationsystem-module">Step 1 NotificationSystem module</h2>
+<p>Create a new directory under the Core directory with the name NotificationSystem or any other name.</p>
+<p>Inside it, create a new <code>ConfigProvider.php</code>, a new <code>NotificationService.php</code> and then copy the code below.</p>
+<p>ConfigProvider code:</p>
+<pre class="highlight"><code class="language-php">&lt;?php
+
+declare(strict_types=1);
+
+namespace Core\NotificationSystem;
+
+use Core\NotificationSystem\Service\NotificationService;
+use Dot\DependencyInjection\Factory\AttributedServiceFactory;
+
+/**
+ * @phpstan-type ConfigType array{
+ *      dependencies: DependenciesType,
+ * }
+ * @phpstan-type DependenciesType array{
+ *       factories: array&lt;class-string, class-string&gt;,
+ * }
+ */
+class ConfigProvider
+{
+    /**
+     * @return ConfigType
+     */
+    public function __invoke(): array
+    {
+        return [
+            'dependencies' =&gt; $this-&gt;getDependencies(),
+        ];
+    }
+
+    /**
+     * @return DependenciesType
+     */
+    public function getDependencies(): array
+    {
+        return [
+            'factories' =&gt; [
+                NotificationService::class =&gt; AttributedServiceFactory::class,
+            ],
+        ];
+    }
+}</code></pre>
+<p>Service code:</p>
+<pre class="highlight"><code class="language-php">&lt;?php
+
+declare(strict_types=1);
+
+namespace Core\NotificationSystem\Service;
+
+use Core\User\Entity\User;
+use Dot\DependencyInjection\Attribute\Inject;
+use Laminas\Json\Encoder;
+use Socket\Raw\Factory;
+use Socket\Raw\Socket;
+
+class NotificationService
+{
+    #[Inject(
+        'config.notification.server',
+    )]
+    public function __construct(
+        // $config from local.php (see step 3)
+        private readonly array $config
+    ) {
+    }
+
+    // open TCP connection to Dotkernel Queue
+    public function createClient(): Socket
+    {
+        $socketRawFactory = new Factory();
+        return $socketRawFactory-&gt;createClient(
+            $this-&gt;config['protocol'] . '://' . $this-&gt;config['host'] . ':' . $this-&gt;config['port']
+        );
+    }
+
+    // send the PAYLOAD to Dotkernel Queue 
+    public function send(string $message): void
+    {
+        $this-&gt;createClient()-&gt;write($message . $this-&gt;config['eof']);
+    }
+
+    // encode processed data
+    protected function encodeEmailMessage(array $data): string
+    {
+        return Encoder::encode($data);
+    }
+
+    // process and send data
+    // change $data type depending on what you need 
+    public function sendNewAccountNotification(mixed $data): void
+    {
+        $data['yourKey'] = $data;
+        $this-&gt;send($this-&gt;encodeEmailMessage($data));
+    }
+
+    //create your own custom methods to process data
+}</code></pre>
+<h2 id="step-2-install-new-dependencies">Step 2 Install new dependencies</h2>
+<p>After you have finished creating the new files, navigate to composer.json and add the new dependencies under the require key:</p>
+<pre class="highlight"><code class="language-json">{
+  "require": {
+    "ext-sockets": "*",
+    "clue/socket-raw": "^1.6.0"
+  }
+}</code></pre>
+<p>Install new dependencies using:</p>
+<pre class="highlight"><code class="language-shell">composer install</code></pre>
+<p>Under the <code>autoload</code> → <code>psr-4</code> key add the newly created module:</p>
+<pre class="highlight"><code class="language-php">"Core\\NotificationSystem\\": "src/Core/src/NotificationSystem/src"</code></pre>
+<p>Run <code>composer dump-autoload</code> to regenerate Composer’s autoload files.</p>
+<h2 id="step-3-configuration">Step 3 Configuration</h2>
+<p>Navigate to <code>config/config.php</code> and add your new Core ConfigProvider <code>Core\NotificationSystem\ConfigProvider::class</code>.</p>
+<p>After you have added the new config provider, navigate to <code>config/autoload/local.php</code> and add a new config key used for server connection.</p>
 <blockquote>
-<p>We recommend the use of <a href="https://hetzner.cloud/?ref=HYu6z4XGfkcP">Hetzner Cloud via our referral link</a> for development thanks to the initial € 20 free <a href="https://www.hetzner.com/legal/referrals">Hetzner Cloud credit</a>.</p>
+<p><strong><em>NOTE:</em></strong>  if you only have the local.php.dist file, duplicate it, and delete .dist from the copy's name.</p>
 </blockquote>
-<h2 id="starting-point">Starting point</h2>
-<p>A server with <strong>AlmaLinux 9</strong> or <strong>10</strong> freshly installed with <code>root</code> access.</p>
-<h3 id="update-os">Update OS</h3>
-<pre class="highlight"><code class="language-shell">dnf update -y</code></pre>
-<h3 id="create-a-new-user-with-sudo-permissions">Create a new user with sudo permissions</h3>
-<pre class="highlight"><code class="language-shell">useradd dotkernel</code></pre>
-<pre class="highlight"><code class="language-shell">passwd dotkernel</code></pre>
-<pre class="highlight"><code class="language-shell">usermod -aG wheel dotkernel</code></pre>
-<blockquote>
-<p>Reboot server.</p>
-<p>SSH into the server as <code>dotkernel</code>.</p>
-</blockquote>
-<h3 id="install-various-utilities">Install various utilities</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y dnf-utils</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf install zip unzip socat wget</code></pre>
-<h3 id="php">PHP</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-$(rpm -E %almalinux).rpm</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf module enable php:remi-8.4</code></pre>
-<pre class="highlight"><code class="language-shell">sudo dnf install -y php php-cli php-common php-intl</code></pre>
-<h3 id="start-php-fpm">Start PHP-FPM</h3>
-<pre class="highlight"><code class="language-shell">sudo systemctl start php-fpm</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable php-fpm</code></pre>
-<h3 id="install-and-verify-swoole">Install and verify swoole</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install php-pecl-swoole6</code></pre>
-<pre class="highlight"><code class="language-shell">php -i | grep swoole</code></pre>
-<h3 id="valkey">Valkey</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl start valkey</code></pre>
-<pre class="highlight"><code class="language-shell">sudo valkey-cli ping</code></pre>
-<h3 id="valkey-php-module">Valkey PHP module</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install php-pecl-redis</code></pre>
-<p>Make sure that the module is installed.</p>
-<pre class="highlight"><code class="language-shell">php -i | grep redis</code></pre>
-<h3 id="git">Git</h3>
-<pre class="highlight"><code class="language-shell">sudo dnf install git</code></pre>
-<h3 id="composer">Composer</h3>
-<pre class="highlight"><code class="language-shell">sudo wget https://getcomposer.org/installer -O composer-installer.php</code></pre>
-<pre class="highlight"><code class="language-shell">sudo chmod 777 /usr/local/bin</code></pre>
-<pre class="highlight"><code class="language-shell">sudo php composer-installer.php --filename=composer --install-dir=/usr/local/bin</code></pre>
-<h3 id="firewall-setup">Firewall setup</h3>
-<p>To add a minimum level of security, a firewall needs to be installed and allow connections from outside only to certain ports, from certain IPs.</p>
-<blockquote>
-<p>Firewall setup is not mandatory</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo dnf install firewalld</code></pre>
-<pre class="highlight"><code class="language-shell">sudo systemctl enable firewalld</code></pre>
-<blockquote>
-<p>Before starting the firewall, make sure you will not get locked outside:</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo firewall-offline-cmd --zone=public --add-port=22/tcp --permanent</code></pre>
-<p>Then enable the firewall:</p>
-<pre class="highlight"><code class="language-shell">sudo systemctl start firewalld</code></pre>
-<blockquote>
-<p>By default, Swoole runs on port <strong>8556</strong>.
-You can change that in the configuration file.</p>
-</blockquote>
-<pre class="highlight"><code class="language-shell">sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="YOUR_IP_ADDRESS" port port="8556" protocol="tcp" accept'</code></pre>
-<pre class="highlight"><code class="language-shell">sudo firewall-cmd --reload</code></pre>
-<blockquote>
-<p>NOW THE SERVER IS READY</p>
-</blockquote>
+<pre class="highlight"><code class="language-php">'notification' =&gt; [
+        'server' =&gt; [
+            'protocol' =&gt; 'tcp',
+            'host'     =&gt; 'IP of the Dotkernel Queue ',
+            'port'     =&gt; 'port number',
+            'eof'      =&gt; "\n",
+        ],
+    ],</code></pre>
+<h2 id="step-4-service-usage">Step 4 Service usage</h2>
+<p>Navigate to your handler, inject the new service and use your custom method where needed.</p>
+<pre class="highlight"><code class="language-php">    #[Inject(
+        NotificationService::class
+    )]
+    public function __construct(
+        protected NotificationService $notificationService
+    ) {</code></pre>
 
 
 
@@ -435,9 +552,9 @@ You can change that in the configuration file.</p>
         
         <li class="col text-nowrap text-md-start">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../what-is-queue/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../../valkey/">
                     <i class="bi bi-chevron-left"></i>
-                    Understanding the Queue
+                    Valkey
                 </a>
             
         </li>
@@ -445,8 +562,8 @@ You can change that in the configuration file.</p>
         
         <li class="col text-nowrap text-md-end pe-0">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../installation/">
-                    Installation
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../send-emails/">
+                    Send Emails
                     <i class="bi bi-chevron-right"></i>
                 </a>
             
@@ -570,7 +687,7 @@ You can change that in the configuration file.</p>
 </footer>
 
         <script>
-            let base_url = '../..',
+            let base_url = '../../..',
                 project  = "queue",
                 siteName = 'queue';
 
