@@ -1,5 +1,13 @@
 # Available commands and usage
 
+## Summary
+
+Three commands — `failed`, `processed`, `inventory` — report on the queue's logs and
+current contents; each is available both via the local CLI and over a TCP message to
+the queue server.
+
+## Details
+
 The commands available are:
 
 1. `GetFailedMessagesCommand.php (failed)` - returns logs with messages that failed to process (levelName:error)
@@ -13,11 +21,11 @@ The commands can be run in two different ways:
 To run the commands via CLI, use the following syntax:
 
 ```shell
-php bin/cli.php failed --start="yyyy-mm-dd" --end="yyyy-mm-dd" --limit=int
+php bin/cli.php failed --start="yyyy-mm-dd[ HH:ii:ss]" --end="yyyy-mm-dd[ HH:ii:ss]" --limit=int
 ```
 
 ```shell
-php bin/cli.php processed --start="yyyy-mm-dd" --end="yyyy-mm-dd" --limit=int
+php bin/cli.php processed --start="yyyy-mm-dd[ HH:ii:ss]" --end="yyyy-mm-dd[ HH:ii:ss]" --limit=int
 ```
 
 ```shell
@@ -29,11 +37,11 @@ php bin/cli.php inventory
 To use commands using TCP messages, the following messages can be used:
 
 ```shell
-echo "failed --start=yyyy-mm-dd --end=yyyy-mm-dd --limit=days" | socat -t1 - TCP:host:port
+echo "failed --start=yyyy-mm-dd[ HH:ii:ss] --end=yyyy-mm-dd[ HH:ii:ss] --limit=days" | socat -t1 - TCP:host:port
 ```
 
 ```shell
-echo "processed --start=yyyy-mm-dd --end=yyyy-mm-dd --limit=days" | socat -t1 - TCP:host:port
+echo "processed --start=yyyy-mm-dd[ HH:ii:ss] --end=yyyy-mm-dd[ HH:ii:ss] --limit=days" | socat -t1 - TCP:host:port
 ```
 
 In both cases, the flags are optional. Keep in mind if both `start` and `end` are set, `limit` will not be applied, it's only used when one of `start` or `end` is missing.
@@ -49,3 +57,21 @@ echo "control" | socat -t1 - TCP:host:port
 ```shell
 echo "inventory" | socat -t1 - TCP:host:port
 ```
+
+## FAQ
+
+**Q: What's the difference between the `failed` and `processed` commands?**
+
+A: `failed` returns log entries at `levelName:error` (messages that failed to
+process); `processed` returns entries at `levelName:info` (messages that processed
+successfully).
+
+**Q: Can I filter by date and also cap the number of days?**
+
+A: Yes, but not at the same time — `--limit` is only applied when exactly one of
+`--start` or `--end` is given; if both are set, `--limit` is ignored.
+
+**Q: How do I quickly verify the queue is processing messages end to end?**
+
+A: Send the `control` message (e.g. `echo "control" | socat -t1 - TCP:host:port`); it
+is always logged as processed successfully, giving you a fast round-trip check.

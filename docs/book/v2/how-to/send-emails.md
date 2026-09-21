@@ -1,12 +1,19 @@
 # SEND EMAILS
 
+## Summary
+
+How to add background email sending to a Dotkernel application by importing Core
+into the queue and following the `send-email` branch as a reference implementation.
+
+## Details
+
 Using a queuing service solves problems such as server overload. For example, if a server receives a large number of requests, it tries to process them synchronously, resulting in long response times or even server crashes.
 
 A concrete example is sending emails. While a series of tasks are running on the server, a task such as sending an email is passed to a queue and run in the background so the server can move on to the next task, while the queue composes the email and sends it. Tasks are queued and processed gradually (FIFO), depending on available resources.
 
 To implement such a service, the [`send-email`](https://github.com/dotkernel/queue/tree/send-email) branch can be taken as a model.
 
-> **_NOTE:_**  The default branch 1.0 holds only the base code of Queue and provides essential features such as:
+> **_NOTE:_**  The default branch holds only the base code of Queue and provides essential features such as:
 >
 > * Adding messages to the queue
 > * Retrieving and processing messages (FIFO)
@@ -108,3 +115,23 @@ Inside your `config/autoload` folder create a new file named `mail.global.php`, 
 Once everything is installed and configured we can move on to handle the data in the queue. In the message handler for example `MessageHandler`, each message from the queue is processed, the email is composed, and then sent. By injecting the required services and using templates, the handler can send emails without blocking the main application, respecting FIFO and asynchronous processing.
 
 In this [file](https://github.com/dotkernel/queue/blob/send-email/src/App/Message/MessageHandler.php) you can follow a simple example of how to create and send an email using data received from the queue inside the handler.
+
+## FAQ
+
+**Q: Do I need to modify the base queue code to send emails?**
+
+A: No — import the `Core` module (copied in or as a submodule) and follow the
+`send-email` branch as a model; the default branch already provides message queuing
+and FIFO processing.
+
+**Q: What does importing Core actually give the queue?**
+
+A: Access to the main application's entities, services and configuration (cache,
+mail, authentication, etc.), so the worker can compose and send real emails using
+your existing templates.
+
+**Q: Where do I configure the mailer itself?**
+
+A: Create `config/autoload/mail.global.php` from the example in the `send-email`
+branch and fill in your mail settings; the queue uses this to send emails in the
+background.

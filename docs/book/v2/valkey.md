@@ -1,5 +1,12 @@
 # Valkey usage
 
+## Summary
+
+Quick reference for the Valkey CLI commands used to inspect and manage the
+`messages` and `failed` streams that back the queue.
+
+## Details
+
 Valkey is an open source (BSD) high-performance key/value datastore that supports a variety of workloads such as caching, message queues and can act as a primary database.
 
 The following commands can be run in the CLI to interact with Valkey.
@@ -86,3 +93,20 @@ Delete a specific entry:
 ```shell
 XDEL streamName <entryId>
 ```
+
+## FAQ
+
+**Q: How do I open an interactive Valkey session?**
+
+A: Run `valkey-cli` on the server; it drops you into the CLI used for every command
+on this page.
+
+**Q: How do I read the queue's stream without removing anything?**
+
+A: Use `XRANGE streamName - +` to read entries oldest to newest (switch `-`/`+` to
+reverse the order); it doesn't delete anything.
+
+**Q: How do I clear a stream without deleting the key itself?**
+
+A: `XTRIM streamName MAXLEN 0` removes all entries but keeps the stream key, unlike
+`DEL streamName` which removes the key entirely.
