@@ -1,5 +1,12 @@
 # COMMUNICATE WITH QUEUE
 
+## Summary
+
+Two ways to send a message to Dotkernel Queue from your application: a quick
+procedural TCP call, or a reusable service class wired into a Core module.
+
+## Details
+
 Communication with the  [`Dotkernel Queue`](https://github.com/dotkernel/queue) can be achieved in two different ways: procedural and object-oriented.
 
 ## Procedural approach
@@ -204,3 +211,27 @@ Navigate to your handler, inject the new service and use your custom method wher
         protected NotificationService $notificationService
     ) {
 ```
+
+> **_NOTE:_**  Sending a message only queues it. `src/App/Message/MessageHandler.php`
+> only acts on the literal payload values `control` and `retry` out of the box — add
+> your own `elseif` branch (or replace the handler) to process the payload your
+> service sends, or it will be consumed silently with no effect.
+
+## FAQ
+
+**Q: Which approach should I use — procedural or object-oriented?**
+
+A: Procedural is simplest for a one-off call; the object-oriented
+`NotificationService` approach is better once you're sending messages from multiple
+places, since it's reusable and easier to maintain.
+
+**Q: Why does my message need to end with a newline?**
+
+A: The Swoole listener uses the newline as the end-of-message marker; without it, the
+server keeps waiting for more data and never processes what was sent.
+
+**Q: My message was accepted but nothing happened — why?**
+
+A: Queuing a message only stores it. `src/App/Message/MessageHandler.php` only has
+explicit handling for the literal payload values `control` and `retry` out of the
+box; anything else needs a handler branch you write yourself.

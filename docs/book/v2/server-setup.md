@@ -1,5 +1,13 @@
 # Server setup
 
+## Summary
+
+Step-by-step instructions for provisioning a fresh AlmaLinux 9/10 server with the
+users, PHP runtime, Swoole and Redis/Valkey extensions, and firewall rules the queue
+daemon needs.
+
+## Details
+
 The below instructions were tested only on **AlmaLinux 9** or **10**.
 
 *For other operating systems, they need to be adapted accordingly.*
@@ -20,6 +28,7 @@ dnf update -y
 
 ```shell
 useradd dotkernel
+useradd --system --no-create-home queue
 ```
 
 ```shell
@@ -53,6 +62,9 @@ sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-$(rpm -E %
 ```shell
 sudo dnf module enable php:remi-8.5
 ```
+
+> PHP 8.4 (`php:remi-8.4`) is also supported (`composer.json` allows
+> `~8.4.0 || ~8.5.0`); substitute the module version above if you need 8.4.
 
 ```shell
 sudo dnf install -y php php-cli php-common php-intl
@@ -166,3 +178,26 @@ sudo firewall-cmd --reload
 ```
 
 > NOW THE SERVER IS READY
+
+## FAQ
+
+**Q: Which operating systems does this guide support?**
+
+A: It was tested on AlmaLinux 9 and 10; other operating systems need the steps
+adapted accordingly.
+
+**Q: Which PHP versions can I install?**
+
+A: PHP 8.5 (`php:remi-8.5`) is documented here, and PHP 8.4 (`php:remi-8.4`) is also
+supported since `composer.json` allows `~8.4.0 || ~8.5.0`.
+
+**Q: Which system users does the queue need?**
+
+A: A sudo-capable `dotkernel` user for administration, and a `queue` system
+user/group, which is what the shipped `swoole.service` and `messenger.service` unit
+files run as.
+
+**Q: Is the firewall setup mandatory?**
+
+A: No, but it's recommended — it restricts inbound connections on the queue's TCP
+port (8556 by default) to specific source IPs.

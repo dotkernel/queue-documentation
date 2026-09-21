@@ -1,5 +1,12 @@
 # Tasks Delegated to the Queue
 
+## Summary
+
+What kinds of tasks belong in the queue, how the queue processes them, and the core
+features (logging, security, retries, reporting) that make it reliable.
+
+## Details
+
 Normally, the tasks delegated to the queue:
 
 - Take extended periods of time to execute and may be interrupted by PHP limitations (like the PHP `max_execution_time` parameter).
@@ -38,3 +45,24 @@ The order of the execution uses the **FIFO** (First-In, First-Out) method where 
     - Processing time per job.
     - Error rates - How many messages failed.
     - Throughput - Jobs/sec processed.
+
+## FAQ
+
+**Q: What kinds of tasks should be delegated to the queue?**
+
+A: Long-running, external, or non-response tasks such as data processing, file/media
+processing, networking, database operations, and system/infrastructure tasks.
+
+**Q: In what order does the queue process messages?**
+
+A: FIFO (First-In, First-Out) — the oldest request is processed first, followed by
+newer requests.
+
+**Q: How does the queue protect against untrusted senders?**
+
+A: A firewall allows requests only from whitelisted IPs.
+
+**Q: What happens when a task fails?**
+
+A: The retry mechanism retries failing tasks a certain number of times before removing
+the task from the queue.
